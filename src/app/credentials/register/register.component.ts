@@ -12,16 +12,17 @@ export class RegisterComponent {
   public sectionInfoPersonal: string = 'Información Personal';
   public sectionInfoCorreo: string = 'Correo';
   public sectionInfoContrasena: string = 'Contraseña y Confirmación';
+  confirm_password: string = '';
+
 
   user: Usuario = {
     nombre: '',
-    correo: '',
-    contrasena: '',
     apellido_pat: '',
     apellido_mat: '',
-    id: 1,
-    rol:'',
-    familia_id:'null'
+    correo: '',
+    rol:'sin rol',
+    familia_id:2,
+    contrasena: ''
 
   };
 
@@ -31,6 +32,7 @@ export class RegisterComponent {
   ) {}
 
   register() {
+  console.log(this.user)
     this.credentialsService.register(this.user).subscribe(
       () => {
         alert('Usuario registrado con éxito');
@@ -39,6 +41,8 @@ export class RegisterComponent {
       (error) => alert('Error al registrar el usuario')
     );
   }
+  
+  
 
   navigateToLogin() {
     this.router.navigate(['login']);

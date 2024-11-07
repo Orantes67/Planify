@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable,throwError  } from 'rxjs';
 import { tap,catchError } from 'rxjs/operators';
 import { Usuario } from '../../models/usuario';
-import { Usuarios } from '../../models/usuarios';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,16 @@ export class CredentialsService {
 
   register(user: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}usuarios/register`, user);
-  }
-  login(credentials: { nombre_usuario:string;correo: string; contrasena: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}usuarios/register`, credentials).pipe(
+  } 
+  login(credentials: { user_name: string; user_password: string }): Observable<any> {
+    console.log(credentials);
+    
+    const params = {
+      user_name: credentials.user_name,
+      user_password: credentials.user_password
+    };
+  
+    return this.http.post(`${this.apiUrl}usuarios/login`, {}, { params }).pipe(
       tap((response: any) => {
         if (response.user) {
           localStorage.setItem('user', JSON.stringify(response.user));
@@ -27,5 +34,9 @@ export class CredentialsService {
         return throwError(error);
       })
     );
+  }
+  
+  getUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}usuarios`);
   }
 }

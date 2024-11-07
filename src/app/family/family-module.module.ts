@@ -8,6 +8,7 @@ import { ModalFamilyExitComponent } from './alerts/modal-family-exit/modal-famil
 import { ModalFamilyDeleteMiembroComponent } from './alerts/modal-family-delete-miembro/modal-family-delete-miembro.component';
 import { FamilyJoinComponent } from './family-join/family-join.component';
 import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.component';
+import { FamilySectionComponent } from './family-section/family-section.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.co
     ModalFamilyExitComponent,
     ModalFamilyDeleteMiembroComponent,
     FamilyJoinComponent,
-    FamilyDashboardComponent
+    FamilyDashboardComponent,
+    FamilySectionComponent
   ],
   imports: [
     CommonModule,

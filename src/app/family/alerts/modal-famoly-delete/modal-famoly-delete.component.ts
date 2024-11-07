@@ -11,7 +11,7 @@ export class ModalFamolyDeleteComponent {
   constructor(public dialogRef: MatDialogRef<ModalFamolyDeleteComponent>) {}
 
   closeDialog(): void {
-    this.dialogRef.close(); // Cerrar el diálogo
+    this.dialogRef.close(); 
   }
   delete(): void {
    
