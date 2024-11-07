@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-famoly-delete',
-  templateUrl: './modal-famoly-delete.component.html',
-  styleUrl: './modal-famoly-delete.component.css'
+  templateUrl: './modal-famoly-delete.component.html'
 })
 export class ModalFamolyDeleteComponent {
+  
 
+  constructor(public dialogRef: MatDialogRef<ModalFamolyDeleteComponent>) {}
+
+  closeDialog(): void {
+    this.dialogRef.close(); // Cerrar el diálogo
+  }
+  delete(): void {
+   
+    this.dialogRef.close(true); 
+  }
 }
