@@ -6,4 +6,5 @@ export interface UserI {
   rol: string;
   familia_id: number;
   contrasena: string;
+  usuario_id?: number; 
 }

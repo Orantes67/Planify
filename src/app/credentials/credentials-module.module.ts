@@ -6,20 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
-  declarations: [
-    AuthPageComponent,
-    LoginComponent,
-    RegisterComponent,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  exports: [
-    AuthPageComponent,
-  ]
+  declarations: [AuthPageComponent, LoginComponent, RegisterComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  exports: [AuthPageComponent],
 })
 export class CredentialsModule {}
