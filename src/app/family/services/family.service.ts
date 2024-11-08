@@ -1,38 +1,51 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Family } from '../../models/familia';
+import { FamilyI } from '../interfaces/family-i';
+import { UserI } from '../../credentials/interfaces/user-i';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FamilyService {
-  private url_base = 'http://3.224.128.21:8000/familias/';
+  private apiUrl = `${environment.apiUrl}/familias`;
+  private usersApiUrl = `${environment.apiUrl}/usuarios`;
 
   constructor(private http: HttpClient) {}
 
- 
-  getAllFAMILY(): Observable<Family[]> {
-    return this.http.get<Family[]>(this.url_base);
+  createFamily(family: FamilyI, userId: number): Observable<FamilyI> {
+    return this.http.post<FamilyI>(`${this.apiUrl}`, {
+      ...family,
+      userId,
+    });
   }
 
-  
-  getFAMILYById(id: number): Observable<Family> {
-    return this.http.get<Family>(`${this.url_base}${id}`);
+  updateUserFamily(updatedUser: UserI): Observable<UserI> {
+    return this.http.put<UserI>(
+      `${this.usersApiUrl}/${updatedUser.usuario_id}`,
+      updatedUser
+    );
   }
 
- 
-  createFamily(familia: Family): Observable<Family> {
-    return this.http.post<Family>(this.url_base, familia);
+  getFamilyById(familiaId: number): Observable<FamilyI> {
+    return this.http.get<FamilyI>(`${this.apiUrl}/${familiaId}`);
   }
 
-  
-  updateFamily(id: number, familia: Family): Observable<Family> {
-    return this.http.put<Family>(`${this.url_base}${id}`, familia);
+  getUsersByFamily(familiaId: number): Observable<UserI[]> {
+    return this.http.get<UserI[]>(
+      `${this.usersApiUrl}/familia/${familiaId}/usuarios`
+    );
   }
 
-  
-  deleteFamily(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url_base}${id}`);
+  removeMember(memberId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${memberId}`);
+  }
+
+  updateFamilyId(userId: number, familiaId: number): Observable<UserI> {
+    return this.http.put<UserI>(
+      `${this.usersApiUrl}/${userId}/familia?familia_id=${familiaId}`,
+      {}
+    );
   }
 }
