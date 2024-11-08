@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CredentialsService } from '../services/credentials.service';
-import { Router } from '@angular/router';
+import { CredentialsI } from '../interfaces/credentials-i';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  credentials = { user_name:'', user_password: '' };
+  @Output() loginSuccess = new EventEmitter<void>();
+  loginForm: FormGroup;
+  errorMessage = '';
 
-  constructor(private credentialsService: CredentialsService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private credentialsService: CredentialsService
+  ) {
+    this.loginForm = this.fb.group({
+      nombre_usuario: ['', [Validators.required]],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
   login() {
-    console.log(this.credentials)
-    this.credentialsService.login(this.credentials).subscribe(
-      () => this.router.navigate(['/Home']), 
-      (error) => alert('Credenciales incorrectas')
-    );
-  }
-  navigateToRegister() {
-    this.router.navigate(['/register']); 
+    if (this.loginForm.invalid) return;
+    const credentials: CredentialsI = this.loginForm.value;
+
+    this.credentialsService.loginUser(credentials).subscribe({
+      next: () => this.loginSuccess.emit(),
+      error: () =>
+        (this.errorMessage = 'Credenciales incorrectas. Inténtalo de nuevo.'),
+    });
   }
 }
-

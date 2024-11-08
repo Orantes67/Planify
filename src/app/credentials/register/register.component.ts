@@ -1,50 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CredentialsService } from '../services/credentials.service';
-import { Usuario } from '../../models/usuario';
-import { Router } from '@angular/router';
+import { UserI } from '../interfaces/user-i';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']  
 })
 export class RegisterComponent {
-  public sectionInfoPersonal: string = 'Información Personal';
-  public sectionInfoCorreo: string = 'Correo';
-  public sectionInfoContrasena: string = 'Contraseña y Confirmación';
-  confirm_password: string = '';
-
-
-  user: Usuario = {
-    nombre: '',
-    apellido_pat: '',
-    apellido_mat: '',
-    correo: '',
-    rol:'sin rol',
-    familia_id:2,
-    contrasena: ''
-
-  };
+  @Output() registerSuccess = new EventEmitter<void>();
+  registerForm: FormGroup;
+  errorMessage = '';
 
   constructor(
-    private credentialsService: CredentialsService,
-    private router: Router
-  ) {}
+    private fb: FormBuilder,
+    private credentialsService: CredentialsService
+  ) {
+    this.registerForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido_pat: ['', Validators.required],
+      apellido_mat: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
+      rol: ['miembro', Validators.required],
+      familia_id: [3, Validators.required],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
   register() {
-  console.log(this.user)
-    this.credentialsService.register(this.user).subscribe(
-      () => {
-        alert('Usuario registrado con éxito');
-        this.router.navigate(['login']);
-      },
-      (error) => alert('Error al registrar el usuario')
-    );
-  }
-  
-  
+    if (this.registerForm.invalid) return;
+    const user: UserI = this.registerForm.value;
 
-  navigateToLogin() {
-    this.router.navigate(['login']);
+    this.credentialsService.registerUser(user).subscribe({
+      next: () => this.registerSuccess.emit(),
+      error: () =>
+        (this.errorMessage = 'Error al registrarse. Inténtalo de nuevo.'),
+    });
   }
 }
