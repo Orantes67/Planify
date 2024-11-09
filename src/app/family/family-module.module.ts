@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalFamolyDeleteComponent } from './alerts/modal-famoly-delete/modal-famoly-delete.component';
-import { ModalFamilyExitComponent } from './alerts/modal-family-exit/modal-family-exit.component';
-import { ModalFamilyDeleteMiembroComponent } from './alerts/modal-family-delete-miembro/modal-family-delete-miembro.component';
-import { FamilyJoinComponent } from './family-join/family-join.component';
 import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.component';
 
-
+import { FamilyPageComponent } from './family-page/family-page.component';
+import { FamilySectionComponent } from './family-section/family-section.component';
+import { FamilyService } from './services/family.service';
+import { HeaderModule } from '../../header/header.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
-    ModalFamolyDeleteComponent,
-    ModalFamilyExitComponent,
-    ModalFamilyDeleteMiembroComponent,
-    FamilyJoinComponent,
-    FamilyDashboardComponent
+    FamilyDashboardComponent,
+
+    FamilyPageComponent,
+    FamilySectionComponent,
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule, HeaderModule, FontAwesomeModule],
+  providers: [FamilyService],
 })
-export class FamilyModule{ }
+export class FamilyModule {}
