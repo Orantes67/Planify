@@ -5,7 +5,6 @@ import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.co
 import { FamilyPageComponent } from './family-page/family-page.component';
 import { FamilySectionComponent } from './family-section/family-section.component';
 import { FamilyService } from './services/family.service';
-import { HeaderModule } from '../../header/header.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
@@ -15,7 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FamilyPageComponent,
     FamilySectionComponent,
   ],
-  imports: [CommonModule, HeaderModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule],
   providers: [FamilyService],
 })
 export class FamilyModule {}
