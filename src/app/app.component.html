@@ -1,0 +1,10 @@
+<div class="border-4  border-cyan-500 rounded-lg h-screen w-screen   flex   ">
+    <div class="border-4 border-red-600 rounded-lg p-5 w-[400px]" *ngIf="!isLoginRoute()">
+        <app-sidebar></app-sidebar>
+    </div>
+    
+        <div class="border-4 border-emerald-500 w-full rounded-lg " >
+            <router-outlet></router-outlet>
+        </div>
+    
+</div>
