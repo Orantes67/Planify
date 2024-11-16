@@ -33,8 +33,11 @@ export class RegisterComponent {
 
     this.credentialsService.registerUser(user).subscribe({
       next: () => this.registerSuccess.emit(),
-      error: () =>
-        (this.errorMessage = 'Error al registrarse. Inténtalo de nuevo.'),
+      error: (err) =>
+        (this.errorMessage =
+          'Error al registrarse. Inténtalo de nuevo.' +
+          '\n' +
+          err.error.detail),
     });
   }
 }
