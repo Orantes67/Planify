@@ -20,7 +20,7 @@ export class CredentialsService {
 
   loginUser(credentials: CredentialsI): Observable<UserSerialization> {
     const params = new HttpParams()
-      .set('user_name', credentials.nombre_usuario)
+      .set('email', credentials.email)
       .set('user_password', credentials.contrasena);
 
     return this.http.post<UserSerialization>(`${this.apiUrl}/login`, null, {
