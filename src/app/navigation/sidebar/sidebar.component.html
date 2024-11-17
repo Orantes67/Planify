@@ -1,32 +1,40 @@
-<div class="flex flex-col bg-purple-100 p-4 rounded-lg shadow-md w-full h-full ">
-    <h1>{{fechaActual}}</h1>
-    <hr class="my-4 border-t-2 border-gray-300">
-    <div>
-        <ul>
-            <li class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2">
-                <fa-icon [icon]="faList" class="text-gray-600 mr-2 " ></fa-icon>
-            <span class="flex-1 font-semibold">Mis actividades</span>
-            </li>
-            <li class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2">
-                <fa-icon [icon]="faUsers" class="text-gray-600 mr-2"></fa-icon>
-                <span class="font-semibold">Mi Familia</span>
-            </li>
-            <li class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300">
-                <fa-icon [icon]="faBell" class="text-gray-600 mr-2"></fa-icon>
-                <span class="font-semibold">Recordatorio</span>
-            </li>
-            <li class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2">
-                <fa-icon [icon]="faList" class="text-gray-600 mr-2"></fa-icon>
-                <span class="flex-1 font-semibold">Mi perfil</span>
-            </li>
-        </ul>
-    </div>
-    <div class="flex justify-center py-10">
-        <img class=" w-64 "src="logo.png">
-    </div>
-    <div class="flex flex-row justify-around">
-        <fa-icon class="text-[70px]" [icon]="faFacebookSquare"></fa-icon>
-        <fa-icon class="text-[70px]" [icon]="faInstagramSquare"></fa-icon>
-        <fa-icon class="text-[70px]" [icon]="faTwitterSquare"></fa-icon>
-    </div>
+<div class="flex flex-col bg-purple-100 p-4 rounded-lg shadow-md w-full h-full">
+  <h1>{{ fechaActual }}</h1>
+  <hr class="my-4 border-t-2 border-gray-300" />
+  <div>
+    <ul>
+      <li
+        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faList" class="text-gray-600 mr-2"></fa-icon>
+        <span class="flex-1 font-semibold">Mis actividades</span>
+      </li>
+      <li
+        class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faUsers" class="text-gray-600 mr-2"></fa-icon>
+        <span class="font-semibold">Mi Familia</span>
+      </li>
+      <li
+        class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300"
+      >
+        <fa-icon [icon]="faBell" class="text-gray-600 mr-2"></fa-icon>
+        <span class="font-semibold">Recordatorio</span>
+      </li>
+      <li
+        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faList" class="text-gray-600 mr-2"></fa-icon>
+        <span class="flex-1 font-semibold">Mi perfil</span>
+      </li>
+    </ul>
+  </div>
+  <div class="flex justify-center py-10">
+    <img class="w-64" src="logo.png" />
+  </div>
+  <div class="flex flex-row justify-around">
+    <fa-icon class="text-[70px]" [icon]="faFacebookSquare"></fa-icon>
+    <fa-icon class="text-[70px]" [icon]="faInstagramSquare"></fa-icon>
+    <fa-icon class="text-[70px]" [icon]="faTwitterSquare"></fa-icon>
+  </div>
 </div>

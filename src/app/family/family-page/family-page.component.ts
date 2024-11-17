@@ -31,5 +31,8 @@ export class FamilyPageComponent implements OnInit {
     this.familyService.getFamilyById(familiaId).subscribe((family) => {
       this.family = family;
     });
+    this.familyService.getUsersByFamily(familiaId).subscribe((members) => {
+      this.familyMembers = members;
+    });
   }
 }
