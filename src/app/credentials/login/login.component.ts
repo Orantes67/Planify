@@ -18,7 +18,7 @@ export class LoginComponent {
     private credentialsService: CredentialsService
   ) {
     this.loginForm = this.fb.group({
-      nombre_usuario: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

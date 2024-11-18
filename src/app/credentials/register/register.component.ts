@@ -22,7 +22,6 @@ export class RegisterComponent {
       apellido_mat: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       rol: ['miembro', Validators.required],
-      familia_id: [3, Validators.required],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

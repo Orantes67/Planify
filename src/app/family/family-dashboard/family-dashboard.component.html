@@ -1,7 +1,7 @@
-<div class="bg-yellow-100 p-4 rounded-lg shadow-md w-full">
-  <h3 class="text-lg font-semibold">Familia</h3>
+<div class="bg-yellow-100 p-4 rounded-lg shadow-md w-1/4 flex flex-col items-center">
+  <h3 class="text-lg font-semibold">Miembros de la familia</h3>
   <ul>
-    <li *ngFor="let member of familyMembers" class="flex justify-between items-center mb-2">
+    <li *ngFor="let member of familyMembers" class="flex justify-between items-center mb-2 bg-lime-100 p-4 rounded-md max-w-40 min-h-20">
       <span>{{ member.nombre }} {{ member.apellido_pat }}</span>
       <button *ngIf="isLeader && member.usuario_id" (click)="removeMember(member.usuario_id!)" class="bg-red-500 text-white px-2 py-1 rounded">
         Eliminar

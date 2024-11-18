@@ -4,22 +4,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CredentialsModule } from './credentials/credentials-module.module';
 import { FamilyModule } from './family/family-module.module';
-import { ReminderModule } from "./reminder/reminder.module";
+import { ReminderModule } from './reminder/reminder.module';
 import { NavigationModule } from './navigation/navigation.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CredentialsModule,
     FamilyModule,
     ReminderModule,
-    NavigationModule
-],
+    NavigationModule,
+  ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

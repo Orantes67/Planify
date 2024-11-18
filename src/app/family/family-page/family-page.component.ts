@@ -23,7 +23,7 @@ export class FamilyPageComponent implements OnInit {
     this.user = this.storageService.obtenerUsuario();
     if (this.user) {
       this.isLeader = this.user.rol === 'líder';
-      this.loadFamilyData(this.user.familia_id);
+      if (this.user.familia_id) this.loadFamilyData(this.user.familia_id);
     }
   }
 

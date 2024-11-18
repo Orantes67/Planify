@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: AuthPageComponent },
   { path: 'family', component: FamilyPageComponent },
-  { path: 'reminders', component:  ReminderCategoryCardsComponent},
+  { path: 'reminders', component: ReminderCategoryCardsComponent },
 ];
 
 @NgModule({
