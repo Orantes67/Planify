@@ -32,6 +32,7 @@ export class FamilyService {
       familia_id: familyCode,
       usuario_id: userId,
       rol: rol,
+      id: null,
     };
 
     return this.http.post<PerteneceI>(`${this.perteneceApiUrl}`, relationBody);
