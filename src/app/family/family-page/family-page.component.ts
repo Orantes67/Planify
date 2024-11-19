@@ -11,28 +11,30 @@ import { StorageService } from '../../services/storage.service';
 export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
-  isLeader: boolean = false;
-  family: FamilyI | null = null;
+  selectedFamily: FamilyI | null = null;
 
   constructor(
-    private familyService: FamilyService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private familyService: FamilyService
   ) {}
 
   ngOnInit(): void {
     this.user = this.storageService.obtenerUsuario();
-    if (this.user) {
-      this.isLeader = this.user.rol === 'líder';
-      if (this.user.familia_id) this.loadFamilyData(this.user.familia_id);
-    }
   }
 
-  loadFamilyData(familiaId: number) {
-    this.familyService.getFamilyById(familiaId).subscribe((family) => {
-      this.family = family;
-    });
-    this.familyService.getUsersByFamily(familiaId).subscribe((members) => {
-      this.familyMembers = members;
-    });
+  selectFamily(family: FamilyI): void {
+    this.selectedFamily = family; 
+    this.loadFamilyMembers(family.id_familia); 
+  }
+
+  loadFamilyMembers(familyId: number | null): void {
+    if (familyId)
+      this.familyService.getUsersByFamily(familyId).subscribe({
+        next: (members) => {
+          this.familyMembers = members;
+        },
+        error: (err) =>
+          console.error('Error al cargar miembros de la familia:', err),
+      });
   }
 }
