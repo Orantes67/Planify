@@ -1,18 +1,16 @@
 <div class="flex h-screen bg-gray-100">
   <div class="flex flex-col w-3/4 space-y-4 p-4">
-    <h1 class="text-3xl font-bold">Planify</h1>
-    <button class="justify-self-end">Cerrar sesión</button>
+    <h1 class="text-3xl font-bold">Planify - Mi Familia</h1>
 
     <app-family-section
       [user]="user"
-      [family]="family"
-      (familyUpdated)="loadFamilyData(user?.familia_id!)"
       class="mb-4"
+      (selectedFamily)="selectFamily($event)"
     ></app-family-section>
 
     <app-family-dashboard
+      [family]="selectedFamily"
       [familyMembers]="familyMembers"
-      [isLeader]="isLeader"
       class="mt-4"
     ></app-family-dashboard>
   </div>

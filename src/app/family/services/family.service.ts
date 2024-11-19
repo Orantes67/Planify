@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { FamilyI } from '../interfaces/family-i';
 import { UserI } from '../../credentials/interfaces/user-i';
 import { environment } from '../../../environments/environment';
+import { PerteneceI } from '../interfaces/pertenece-i';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { environment } from '../../../environments/environment';
 export class FamilyService {
   private apiUrl = `${environment.apiUrl}/familias`;
   private usersApiUrl = `${environment.apiUrl}/usuarios`;
+  private perteneceApiUrl = `${environment.apiUrl}/pertenece`;
 
   constructor(private http: HttpClient) {}
 
@@ -21,11 +23,18 @@ export class FamilyService {
     });
   }
 
-  updateUserFamily(updatedUser: UserI): Observable<UserI> {
-    return this.http.put<UserI>(
-      `${this.usersApiUrl}/${updatedUser.usuario_id}`,
-      updatedUser
-    );
+  joinFamily(
+    familyCode: number,
+    userId: number,
+    rol: string
+  ): Observable<PerteneceI> {
+    const relationBody: PerteneceI = {
+      familia_id: familyCode,
+      usuario_id: userId,
+      rol: rol,
+    };
+
+    return this.http.post<PerteneceI>(`${this.perteneceApiUrl}`, relationBody);
   }
 
   getFamilyById(familiaId: number): Observable<FamilyI> {
@@ -34,7 +43,13 @@ export class FamilyService {
 
   getUsersByFamily(familiaId: number): Observable<UserI[]> {
     return this.http.get<UserI[]>(
-      `${this.usersApiUrl}/familia/${familiaId}/usuarios`
+      `${this.perteneceApiUrl}/family/${familiaId}/users`
+    );
+  }
+
+  getRelationshipByFamilyId(familiaId: number): Observable<PerteneceI[]> {
+    return this.http.get<PerteneceI[]>(
+      `${this.perteneceApiUrl}/family/${familiaId}`
     );
   }
 

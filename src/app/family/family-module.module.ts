@@ -1,20 +1,33 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.component';
-
 import { FamilyPageComponent } from './family-page/family-page.component';
 import { FamilySectionComponent } from './family-section/family-section.component';
+import { ModalFamilyManageComponent } from './alerts/modal-family-manage/modal-family-manage.component';
 import { FamilyService } from './services/family.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     FamilyDashboardComponent,
-
     FamilyPageComponent,
     FamilySectionComponent,
+    ModalFamilyManageComponent,
   ],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+  ],
   providers: [FamilyService],
 })
 export class FamilyModule {}
