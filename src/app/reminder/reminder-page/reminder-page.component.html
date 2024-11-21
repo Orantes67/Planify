@@ -1,14 +1,85 @@
-<div class="p-10 h-screen">
-    <div class="flex flex-row p-12">
-        <button class=" bg-gray-400 rounded-md">asda</button>
-        <p><strong>Agregar recordatorio</strong></p>
+<div class="p-10 pl-28 h-screen  grid grid-cols-2  gap-20 ">
+    <!-- Columna izquierda -->
+    <div class="">
+      <h1 class="text-4xl font-bold text-purple-800 mb-6">Planify</h1>
+      <div class="flex justify-center items-center gap-2 mb-6">
+        <button (click)="abrirModal()" class="bg-purple-100 hover:bg-purple-200 rounded-lg w-14 h-14 flex items-center justify-center">
+          <span class="material-icons text-black text-[30px]">add</span>
+        </button>
+        <h2 class="text-black font-medium text-[20px]">Agregar recordatorio</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Categorías -->
+        <div class="bg-red-200 rounded-lg p-4 text-center">
+          <p class="text-lg font-bold">Hoy</p>
+          <span class="block text-2xl font-bold">1</span>
+        </div>
+        <div class="bg-green-200 rounded-lg p-4 text-center">
+          <p class="text-lg font-bold">Programados</p>
+          <span class="block text-2xl font-bold">1</span>
+        </div>
+        <div class="bg-blue-200 rounded-lg p-4 text-center">
+          <p class="text-lg font-bold">Familia</p>
+          <span class="block text-2xl font-bold">1</span>
+        </div>
+        <div class="bg-yellow-200 rounded-lg p-4 text-center">
+          <p class="text-lg font-bold">Eventos</p>
+          <span class="block text-2xl font-bold">1</span>
+        </div>
+      </div>
+      <!-- Actividades por categoría -->
+      <div class="mt-6">
+        <div class="bg-gray-100 rounded-lg p-4 mb-4">
+          <h3 class="font-bold">Trabajo en familia</h3>
+          <div class="mt-2">
+            <label class="flex items-center">
+              <input type="radio" class="mr-2"> Arreglar la casa
+            </label>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-lg p-4">
+          <h3 class="font-bold">Personal</h3>
+          <p class="mt-2 text-sm">Más actividades...</p>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-col">
-        <app-reminder-category-cards></app-reminder-category-cards>
-        <app-reminder-dashboard></app-reminder-dashboard>
-
+  <app-modal-form-add  (RecordatorioCreado)="onRecordatorioCreado($event)" *ngIf="modalAbierto" (cerrar)="cerrarModal() "></app-modal-form-add>
+    <!-- Columna derecha -->
+    <div class="">
+      <h2 class="text-xl font-bold mb-4">Próximos</h2>
+      <div class="flex flex-col space-y-4">
+        <!-- Recordatorios -->
+        <div class="flex justify-between items-center border-b pb-4">
+          <div class="flex flex-col">
+            <span class="text-gray-600 text-sm">30/10/2024</span>
+            <span class="text-red-500 font-bold">Pagar Spotify</span>
+            <span class="text-red-500 text-sm">Pagar 150</span>
+          </div>
+          <button class="bg-purple-700 w-6 h-6 rounded-full flex items-center justify-center">
+            <span class="material-icons text-white text-sm">check</span>
+          </button>
+        </div>
+        <div class="flex justify-between items-center border-b pb-4">
+          <div class="flex flex-col">
+            <span class="text-gray-600 text-sm">5/11/2024</span>
+            <span class="text-yellow-500 font-bold">Pagar Spotify</span>
+            <span class="text-yellow-500 text-sm">Pagar 150</span>
+          </div>
+          <button class="bg-purple-700 w-6 h-6 rounded-full flex items-center justify-center">
+            <span class="material-icons text-white text-sm">check</span>
+          </button>
+        </div>
+        <div class="flex justify-between items-center border-b pb-4">
+          <div class="flex flex-col">
+            <span class="text-gray-600 text-sm">5/11/2024</span>
+            <span class="text-blue-500 font-bold">Arreglar la casa</span>
+            <span class="text-blue-500 text-sm">Pagar 150</span>
+          </div>
+          <button class="bg-purple-700 w-6 h-6 rounded-full flex items-center justify-center">
+            <span class="material-icons text-white text-sm">check</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <div>
-
-    </div>
-</div>
+  </div>
+  

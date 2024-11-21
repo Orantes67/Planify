@@ -1,0 +1,57 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+    <button
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+      (click)="cerrar.emit()">
+      &times;
+    </button>
+    <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
+    <form (ngSubmit)="crearRecordatorio()">
+      <!-- Contenido -->
+      <div class="mb-4">
+        <label for="contenido" class="block text-gray-700">Contenido</label>
+        <textarea
+          id="contenido"
+          [(ngModel)]="recordatorio.contenido"
+          name="contenido"
+          rows="3"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+        </textarea>
+      </div>
+
+      <!-- ID Familia -->
+      <div class="mb-4">
+        <label for="id_familia" class="block text-gray-700">ID Familia</label>
+        <input
+          id="id_familia"
+          type="number"
+          [(ngModel)]="recordatorio.id_familia"
+          name="id_familia"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required />
+      </div>
+
+      <!-- Hora Límite -->
+      <div class="mb-4">
+        <label for="hora_limite" class="block text-gray-700">Hora Límite</label>
+        <input
+          id="hora_limite"
+          type="time"
+          [(ngModel)]="recordatorio.hora_limite"
+          name="hora_limite"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required />
+      </div>
+
+      <!-- Botón Crear -->
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        Crear
+      </button>
+    </form>
+  </div>
+</div>
