@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthPageComponent } from './credentials/auth-page/auth-page.component';
 import { FamilyPageComponent } from './family/family-page/family-page.component';
 import { ReminderCategoryCardsComponent } from './reminder/reminder-category-cards/reminder-category-cards.component';
+import { ReminderPageComponent } from './reminder/reminder-page/reminder-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: AuthPageComponent },
   { path: 'family', component: FamilyPageComponent },
-  { path: 'reminders', component: ReminderCategoryCardsComponent },
+  { path: 'reminders', component: ReminderPageComponent },
 ];
 
 @NgModule({
