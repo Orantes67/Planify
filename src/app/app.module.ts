@@ -6,6 +6,8 @@ import { CredentialsModule } from './credentials/credentials-module.module';
 import { FamilyModule } from './family/family-module.module';
 import { ReminderModule } from './reminder/reminder.module';
 import { NavigationModule } from './navigation/navigation.module';
+import { ActivitiesModule } from './activities/activities.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +18,7 @@ import { NavigationModule } from './navigation/navigation.module';
     FamilyModule,
     ReminderModule,
     NavigationModule,
+    ActivitiesModule
   ],
   providers: [],
   bootstrap: [AppComponent],
