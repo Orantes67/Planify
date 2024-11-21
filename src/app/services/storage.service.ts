@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { UserI } from '../credentials/interfaces/user-i';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-
   private readonly USER_KEY = 'loggedInUser';
 
-  constructor() { }
+  constructor() {}
 
   guardarUsuario(user: UserI): void {
     this.guardarDatos(this.USER_KEY, user);

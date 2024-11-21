@@ -6,6 +6,7 @@
       [user]="user"
       class="mb-4"
       (selectedFamily)="selectFamily($event)"
+      (updatedFamilies)="reloadUserData()"
     ></app-family-section>
 
     <app-family-dashboard
