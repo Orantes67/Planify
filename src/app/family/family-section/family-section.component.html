@@ -3,20 +3,22 @@
     {{ user?.nombre }} {{ user?.apellido_pat }}
   </h1>
 </div>
-<div class="p-4 rounded-lg shadow-md w-full">
+
+<div class="p-4 rounded-lg shadow-md max-w-80">
   <h3 class="text-lg font-semibold">Familias</h3>
 
+  <!-- Mostrar mensaje si no hay familias -->
   <div *ngIf="familias.length === 0" class="text-gray-500">
     No tienes familias asociadas.
   </div>
 
   <!-- Contenedor principal para el menú desplegable y el ícono -->
-  <div class="relative inline-block w-full">
-    <div class="flex justify-between items-center gap-2">
-      <!-- Drop menu -->
+  <div class="relative inline-block w-full mt-4">
+    <div class="flex items-center gap-2">
+      <!-- Dropdown para seleccionar familia -->
       <button
         (click)="toggleDropdown()"
-        class="w-full bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center hover:bg-gray-200"
+        class="flex-grow bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center hover:bg-gray-200"
       >
         <span>{{ selectedFamilyIn?.nombre || "Selecciona una familia" }}</span>
         <svg
@@ -35,7 +37,7 @@
         </svg>
       </button>
 
-      <!-- Icono de tres puntos -->
+      <!-- Icono de tres puntos para opciones -->
       <div
         *ngIf="getRoleForFamily(selectedFamilyIn?.id_familia) === 'lider'"
         class="relative"
@@ -83,17 +85,18 @@
     </ul>
   </div>
 
-  <div class="mt-4 space-y-2">
+  <!-- Contenedor para los botones -->
+  <div class="mt-4 flex justify-center items-center gap-x-4">
     <button
       (click)="openInputDialog('create')"
-      class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 w-full"
+      class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500"
     >
       Crear Familia
     </button>
 
     <button
       (click)="openInputDialog('join')"
-      class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 w-full"
+      class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500"
     >
       Unirse a Familia
     </button>

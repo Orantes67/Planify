@@ -54,8 +54,8 @@ export class FamilyService {
     );
   }
 
-  removeMember(memberId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${memberId}`);
+  deleteFamily(familyId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${familyId}`);
   }
 
   updateFamilyId(userId: number, familiaId: number): Observable<UserI> {
@@ -63,5 +63,16 @@ export class FamilyService {
       `${this.usersApiUrl}/${userId}/familia?familia_id=${familiaId}`,
       {}
     );
+  }
+
+  updateFamilyById(
+    familiaId: number,
+    updatedFamily: FamilyI
+  ): Observable<FamilyI> {
+    return this.http.put<FamilyI>(`${this.apiUrl}/${familiaId}`, updatedFamily);
+  }
+
+  getUserById(userId: number): Observable<UserI> {
+    return this.http.get<UserI>(`${this.usersApiUrl}/roles/${userId}`);
   }
 }

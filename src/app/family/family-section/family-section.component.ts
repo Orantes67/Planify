@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FamilyService } from '../services/family.service';
 import { UserI } from '../../credentials/interfaces/user-i';
 import { DialogDataI } from '../interfaces/dialogData-i';
@@ -11,27 +19,40 @@ import { FamiliesDataI } from '../interfaces/familiesData-i';
   selector: 'app-family-section',
   templateUrl: './family-section.component.html',
 })
-export class FamilySectionComponent {
+export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
-  @Output() selectedFamily = new EventEmitter<FamilyI>();
+  @Output() selectedFamily = new EventEmitter<FamilyI | null>();
+  @Output() updatedFamilies = new EventEmitter<boolean>();
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
-  isDropdownOpen = false; // Estado del dropdown
-  selectedFamilyIn: FamilyI | null = null; // Familia seleccionada
-  contextMenuOpen: FamilyI | null = null; // Familia con menú contextual abierto
+  isDropdownOpen = false;
+  selectedFamilyIn: FamilyI | null = null;
+  contextMenuOpen: FamilyI | null = null;
 
   constructor(
     private familyService: FamilyService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.loadFamilies();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['user']) {
+      console.log('User changed:', changes['user'].currentValue);
+      this.cdr.detectChanges();
+      this.loadFamilies();
+      console.log(this.familias);
+    }
+  }
+
   loadFamilies(): void {
     if (!this.user?.roles) return;
+
+    console.log(this.user);
 
     this.familias = [];
     this.familiesData = [];
@@ -61,9 +82,9 @@ export class FamilySectionComponent {
   }
 
   selectFamily(family: FamilyI): void {
-    this.selectedFamilyIn = family; // Actualiza la familia seleccionada
-    this.selectedFamily.emit(family); // Emite la familia seleccionada al componente padre
-    this.isDropdownOpen = false; // Cierra el dropdown
+    this.selectedFamilyIn = family;
+    this.selectedFamily.emit(family);
+    this.isDropdownOpen = false;
   }
 
   openInputDialog(action: 'create' | 'join'): void {
@@ -113,6 +134,7 @@ export class FamilySectionComponent {
         .subscribe({
           next: () => {
             console.log('Usuario añadido a la familia');
+            this.updatedFamilies.emit();
             this.loadFamilies();
           },
           error: (err) => console.error('Error al unirse a la familia', err),
@@ -139,7 +161,8 @@ export class FamilySectionComponent {
                 .subscribe({
                   next: () => {
                     console.log('Familia creada y usuario añadido como líder');
-                    this.loadFamilies;
+                    this.updatedFamilies.emit();
+                    this.loadFamilies();
                   },
                   error: (err) =>
                     console.error('Error al unirse como líder:', err),
@@ -157,7 +180,38 @@ export class FamilySectionComponent {
   }
 
   renameFamily(family: FamilyI | null): void {
-    if (family) console.log(`Renombrar familia: ${family.nombre}`);
+    if (!family) return;
+
+    const dialogData: DialogDataI = {
+      title: `Renombrar Familia: ${family.nombre}`,
+      placeholder: 'Nuevo nombre de la familia',
+    };
+
+    const dialogRef = this.dialog.open(ModalFamilyManageComponent, {
+      width: '300px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((newName) => {
+      if (newName && family.id_familia) {
+        this.familyService
+          .updateFamilyById(family.id_familia, {
+            nombre: newName,
+            id_familia: family.id_familia,
+          })
+          .subscribe({
+            next: (updatedFamily) => {
+              console.log('Familia renombrada:', updatedFamily);
+              this.updatedFamilies.emit(true);
+              this.resetSelectedItems();
+              this.loadFamilies();
+            },
+            error: (err) => {
+              console.error('Error al renombrar la familia:', err);
+            },
+          });
+      }
+    });
   }
 
   confirmDeleteFamily(family: FamilyI | null): void {
@@ -187,15 +241,21 @@ export class FamilySectionComponent {
   }
 
   deleteFamily(family: FamilyI): void {
-    if (family.id_familia)
-      this.familyService.removeMember(family.id_familia).subscribe({
+    if (family.id_familia) {
+      this.familyService.deleteFamily(family.id_familia).subscribe({
         next: () => {
-          this.familias = this.familias.filter(
-            (f) => f.id_familia !== family.id_familia
-          );
           console.log(`Familia ${family.nombre} eliminada.`);
+          this.resetSelectedItems();
+          this.loadFamilies();
         },
         error: (err) => console.error('Error al eliminar familia:', err),
       });
+    }
+  }
+
+  resetSelectedItems(): void {
+    this.selectedFamilyIn = null;
+    this.isDropdownOpen = false;
+    this.selectedFamily.emit(null);
   }
 }

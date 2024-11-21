@@ -14,12 +14,5 @@ export class FamilyDashboardComponent {
 
   constructor(private familyService: FamilyService) {}
 
-  removeMember(memberId: number) {
-    if (this.isLeader) {
-      this.familyService.removeMember(memberId).subscribe({
-        next: () => {},
-        error: (err: any) => console.error('Error al eliminar miembro', err),
-      });
-    }
-  }
+  removeMember(memberId: number) {}
 }

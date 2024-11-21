@@ -22,9 +22,11 @@ export class FamilyPageComponent implements OnInit {
     this.user = this.storageService.obtenerUsuario();
   }
 
-  selectFamily(family: FamilyI): void {
-    this.selectedFamily = family; 
-    this.loadFamilyMembers(family.id_familia); 
+  selectFamily(family: FamilyI | null): void {
+    this.selectedFamily = family;
+    if (family) {
+      this.loadFamilyMembers(family.id_familia);
+    } else this.familyMembers = [];
   }
 
   loadFamilyMembers(familyId: number | null): void {
@@ -36,5 +38,18 @@ export class FamilyPageComponent implements OnInit {
         error: (err) =>
           console.error('Error al cargar miembros de la familia:', err),
       });
+  }
+
+  reloadUserData(): void {
+    if (this.user?.usuario_id) {
+      this.familyService.getUserById(this.user.usuario_id).subscribe({
+        next: (updatedUser) => {
+          this.user = { ...updatedUser };
+          console.log(this.user);
+        },
+        error: (err) =>
+          console.error('Error al recargar datos del usuario:', err),
+      });
+    }
   }
 }
