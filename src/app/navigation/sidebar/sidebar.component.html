@@ -7,25 +7,25 @@
   <hr class="m-1 border-t-2 border-gray-300 " />
   <div class="  p-5  text-[25px]">
     <ul class=" ">
-      <li
+      <li (click)="navigation(1)"
         class="flex items-center  justify-between  px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2 h-1/4"
       >
         <fa-icon [icon]="faList" class="text-gray-600 mr-2 text-[30px]"></fa-icon>
         <span class="flex-1 ">Mis actividades</span>
       </li>
-      <li
+      <li (click)="navigation(2)"
         class="flex items-center  justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
       >
         <fa-icon [icon]="faUsers" class="text-gray-600 mr-2 text-[25px]"></fa-icon>
         <span class="">Mi Familia</span>
       </li>
-      <li
+      <li (click)="navigation(3)"
         class=" flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300"
       >
         <fa-icon [icon]="faBell" class="text-gray-600 mr-2 text-[30px]"></fa-icon>
         <span class="">Recordatorio</span>
       </li>
-      <li
+      <li (click)="navigation(4)"
         class=" flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
       >
         <fa-icon [icon]="faList" class="text-gray-600 mr-2 "></fa-icon>

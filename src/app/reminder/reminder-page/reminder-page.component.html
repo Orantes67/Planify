@@ -26,20 +26,9 @@
           <span class="block text-2xl font-bold">1</span>
         </div>
       </div>
-      <div class="mt-6">
-        <div class="bg-gray-100 rounded-lg p-4 mb-4">
-          <h3 class="font-bold">Trabajo en familia</h3>
-          <div class="mt-2">
-            <label class="flex items-center">
-              <input type="radio" class="mr-2"> Arreglar la casa
-            </label>
-          </div>
-        </div>
-        <div class="bg-gray-100 rounded-lg p-4">
-          <h3 class="font-bold">Personal</h3>
-          <p class="mt-2 text-sm">Más actividades...</p>
-        </div>
-      </div>
+
+      <app-reminder-dashboard ></app-reminder-dashboard>
+
     </div>
   <app-modal-form-add  (RecordatorioCreado)="onRecordatorioCreado($event)" *ngIf="modalAbierto" (cerrar)="cerrarModal() "></app-modal-form-add>
    <!-- Temporal, lo cambiare, en cuanto le den el visto bueno, es un posible ejemplo -->
