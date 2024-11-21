@@ -7,22 +7,13 @@ import { Recordatorio } from '../interfaces/recordatorio';
   templateUrl: './reminder-page.component.html',
   styleUrl: './reminder-page.component.css'
 })
-export class ReminderPageComponent implements OnInit {
-  recordatorio: Recordatorio[]=[]
+export class ReminderPageComponent  {
+  
   constructor(private recordatorioservice:RecordatoriosService){}
-  ngOnInit(): void {
-      this.cargarRecordatorios()
-  }
-  cargarRecordatorios(){
-    this.recordatorioservice.getRecordatorios().subscribe(data=>{
-      console.log(data)
-    }
-    )
-  }
-
+//aqui
   onRecordatorioCreado(recordatorio: Recordatorio){
     this.recordatorioservice.createRecordatorio(recordatorio).subscribe(()=>{
-      this.cargarRecordatorios();
+      //this.cargarRecordatorios();
     }
     )
   }
