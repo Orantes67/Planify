@@ -1,5 +1,7 @@
 <div>
-  <h1 class="text-3xl font-semibold">{{ user?.nombre }} {{ user?.apellido_pat }}</h1>
+  <h1 class="text-3xl font-semibold">
+    {{ user?.nombre }} {{ user?.apellido_pat }}
+  </h1>
 </div>
 <div class="p-4 rounded-lg shadow-md w-full">
   <h3 class="text-lg font-semibold">Familias</h3>
@@ -8,25 +10,63 @@
     No tienes familias asociadas.
   </div>
 
-  <!-- Drop menu -->
+  <!-- Contenedor principal para el menú desplegable y el ícono -->
   <div class="relative inline-block w-full">
-    <!-- Botón del dropdown -->
-    <button
-      (click)="toggleDropdown()"
-      class="w-full bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center hover:bg-gray-200"
-    >
-      <span>{{ selectedFamilyIn?.nombre || 'Selecciona una familia' }}</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke="currentColor"
-        class="w-5 h-5 text-gray-600"
+    <div class="flex justify-between items-center gap-2">
+      <!-- Drop menu -->
+      <button
+        (click)="toggleDropdown()"
+        class="w-full bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center hover:bg-gray-200"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
+        <span>{{ selectedFamilyIn?.nombre || "Selecciona una familia" }}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5 text-gray-600"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      <!-- Icono de tres puntos -->
+      <div
+        *ngIf="getRoleForFamily(selectedFamilyIn?.id_familia) === 'lider'"
+        class="relative"
+      >
+        <button
+          (click)="toggleContextMenu(selectedFamilyIn)"
+          class="text-gray-600 hover:text-black"
+        >
+          &#x22EE;
+        </button>
+
+        <!-- Opciones del menú contextual -->
+        <div
+          *ngIf="contextMenuOpen === selectedFamilyIn"
+          class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg z-50"
+        >
+          <button
+            (click)="renameFamily(selectedFamilyIn)"
+            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            Renombrar
+          </button>
+          <button
+            (click)="confirmDeleteFamily(selectedFamilyIn)"
+            class="w-full text-left px-4 py-2 text-red-500 hover:bg-red-100"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Lista desplegable -->
     <ul
@@ -39,35 +79,6 @@
         class="p-4 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
       >
         <span>{{ family.nombre }}</span>
-
-        <!-- Menú contextual (visible si el usuario es líder) -->
-        <div *ngIf="getRoleForFamily(family.id_familia) === 'lider'" class="relative">
-          <button
-            (click)="toggleContextMenu(family)"
-            class="text-gray-600 hover:text-black"
-          >
-            &#x22EE; <!-- Icono de tres puntos -->
-          </button>
-
-          <!-- Opciones del menú contextual -->
-          <div
-            *ngIf="contextMenuOpen === family"
-            class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg z-50"
-          >
-            <button
-              (click)="renameFamily(family)"
-              class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-            >
-              Renombrar
-            </button>
-            <button
-              (click)="confirmDeleteFamily(family)"
-              class="w-full text-left px-4 py-2 text-red-500 hover:bg-red-100"
-            >
-              Eliminar
-            </button>
-          </div>
-        </div>
       </li>
     </ul>
   </div>

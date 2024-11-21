@@ -95,7 +95,7 @@ export class FamilySectionComponent {
     });
   }
 
-  getRoleForFamily(familyId: number | null): string {
+  getRoleForFamily(familyId: number | null | undefined): string {
     if (familyId === null) {
       return 'Sin rol';
     }
@@ -151,35 +151,39 @@ export class FamilySectionComponent {
     }
   }
 
-  toggleContextMenu(family: FamilyI): void {
-    this.contextMenuOpen = this.contextMenuOpen === family ? null : family;
+  toggleContextMenu(family: FamilyI | null): void {
+    if (family)
+      this.contextMenuOpen = this.contextMenuOpen === family ? null : family;
   }
 
-  renameFamily(family: FamilyI): void {
-    // Emite la familia para ser renombrada (tu lógica aquí)
-    console.log(`Renombrar familia: ${family.nombre}`);
+  renameFamily(family: FamilyI | null): void {
+    if (family) console.log(`Renombrar familia: ${family.nombre}`);
   }
 
-  confirmDeleteFamily(family: FamilyI): void {
-    if (family.id_familia)
-      this.familyService.getUsersByFamily(family.id_familia).subscribe({
-        next: (members) => {
-          if (
-            members.length === 1 &&
-            members[0].usuario_id === this.user?.usuario_id
-          ) {
-            // Solo eliminar si el líder es el único miembro
+  confirmDeleteFamily(family: FamilyI | null): void {
+    if (family)
+      if (family.id_familia)
+        this.familyService.getUsersByFamily(family.id_familia).subscribe({
+          next: (members) => {
             if (
-              confirm(`¿Estás seguro de eliminar la familia ${family.nombre}?`)
+              members.length === 1 &&
+              members[0].usuario_id === this.user?.usuario_id
             ) {
-              this.deleteFamily(family);
+              if (
+                confirm(
+                  `¿Estás seguro de eliminar la familia ${family.nombre}?`
+                )
+              ) {
+                this.deleteFamily(family);
+              }
+            } else {
+              alert(
+                'No puedes eliminar esta familia porque tiene más miembros.'
+              );
             }
-          } else {
-            alert('No puedes eliminar esta familia porque tiene más miembros.');
-          }
-        },
-        error: (err) => console.error('Error al verificar miembros:', err),
-      });
+          },
+          error: (err) => console.error('Error al verificar miembros:', err),
+        });
   }
 
   deleteFamily(family: FamilyI): void {
