@@ -22,7 +22,20 @@ this.recordatorioservice.getRecordatorios().subscribe(data=>{
 }
 )}
 
+
 toggleFormulario(): void {
   this.mostrarFormulario = !this.mostrarFormulario;
 }
+
+modalAbierto = false;
+recordatorioSeleccionado!: Recordatorio;
+  abrirModal(recordatorio:Recordatorio) {
+    this.recordatorioSeleccionado = { ...recordatorio }; 
+    this.modalAbierto = true;
+  }
+
+  cerrarModal() {
+    this.cargarRecordatorios();
+    this.modalAbierto = false;
+  }
 }

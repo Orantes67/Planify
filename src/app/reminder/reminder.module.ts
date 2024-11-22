@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalReminderEditComponent } from './alerts/modal-reminder-edit/modal-reminder-edit.component';
+import { ModalReminderDeleteComponent } from './alerts/modal-reminder-delete/modal-reminder-delete.component';
 
 
 
@@ -21,7 +23,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReminderDashboardComponent,
     ReminderPageComponent,
     IncomingActivitiesComponent,
-    ModalFormAddComponent
+    ModalFormAddComponent,
+    ModalReminderEditComponent,
+    ModalReminderDeleteComponent
   ],
   imports: [
     CommonModule,

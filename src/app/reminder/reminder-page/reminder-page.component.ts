@@ -16,7 +16,7 @@ export class ReminderPageComponent  {
       //this.cargarRecordatorios();
     }
     )
-  }
+  } 
 
 
 

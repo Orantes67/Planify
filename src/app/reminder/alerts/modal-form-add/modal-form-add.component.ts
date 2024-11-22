@@ -12,6 +12,7 @@ export class ModalFormAddComponent {
   @Output() RecordatorioCreado = new EventEmitter<Recordatorio>();
   constructor( private recordatoriosService:RecordatoriosService){}
   recordatorio: Recordatorio = {
+    recordatorio_id:0,
     contenido: '',
     id_familia: 0,
     hora_limite: '',
@@ -25,6 +26,7 @@ export class ModalFormAddComponent {
   }
   resetForm(): void {
     this.recordatorio = {
+      recordatorio_id:0,
     contenido: '',
     id_familia: 0,
     hora_limite: '',
