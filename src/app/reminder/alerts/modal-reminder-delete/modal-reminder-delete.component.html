@@ -1,0 +1,19 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+    <h2 class="text-xl font-bold text-center mb-4">¿Estas seguro de eliminarlo?</h2>
+    <form class="flex flex-row justify-around" >
+        <button
+        class="w-2/5 bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        (click)="cerrar.emit()">
+        Cancelar
+      </button>
+      <button
+        (click)="deleteRecordatorio()"
+        class="w-2/5 bg-red-500 text-white py-2 rounded hover:bg-red-600">
+        Eliminar
+      </button>
+    </form>
+  </div>
+</div>

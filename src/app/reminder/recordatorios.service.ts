@@ -16,4 +16,10 @@ export class RecordatoriosService {
   getRecordatorios(): Observable<Recordatorio[]> {
     return this.http.get<Recordatorio[]>(this.apiUrl);
   }
+  updateRecordatorio(recordatorio: Recordatorio): Observable<Recordatorio> {
+    return this.http.put<Recordatorio>(`${this.apiUrl}/${recordatorio.recordatorio_id}`, recordatorio);
+  }
+  deleteRecordatorio(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

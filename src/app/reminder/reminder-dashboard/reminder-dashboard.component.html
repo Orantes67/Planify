@@ -8,10 +8,16 @@
             </button>
         </div>
       <div  *ngFor="let recordatorio of recordatorios"  class="mt-2 flex justify-between ">
-        <div class="" *ngIf="mostrarFormulario">
-
+        <div class="w-full flex justify-between items-center  " *ngIf="mostrarFormulario">
+          <div class="max-w-[240px] ">
+            <p>{{recordatorio.recordatorio_id}}</p>
             <p>{{recordatorio.contenido}}</p>
             <p>{{recordatorio.hora_limite}}</p>
+          </div>
+          <div class="b flex justify-between min-w-[150px]  ">
+            <button class="bg-yellow-200 rounded-lg p-2 " (click)="abrirModal(recordatorio,1)">Editar</button>
+            <button class="bg-red-500 rounded-lg" (click)="abrirModal(recordatorio,2)">Eliminar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -19,4 +25,7 @@
       <h3 class="font-bold">Personal</h3>
       <p class="mt-2 text-sm">Más actividades...</p>
     </div>
+    <app-modal-reminder-edit [recordatorioCreado]="recordatorioSeleccionado"  *ngIf="modalAbiertoEditar" (cerrar)="cerrarModal()"></app-modal-reminder-edit> 
+    <app-modal-reminder-delete [recordatorioCreado]="recordatorioSeleccionado"  *ngIf="modalAbiertoDelete" (cerrar)="cerrarModal()"></app-modal-reminder-delete>
   </div>
+  
