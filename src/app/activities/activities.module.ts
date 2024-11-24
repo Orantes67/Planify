@@ -6,7 +6,7 @@ import { ActivitiesListComponent } from './activities-list/activities-list.compo
 import { ModalFromUpdateActivitiesComponent } from './alerts/modal-from-update-activities/modal-from-update-activities.component';
 import { ModalFromAddActivitiesComponent } from './alerts/modal-from-add-activities/modal-from-add-activities.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   exports: [
     ActivitiesPageComponent,

@@ -1,20 +1,46 @@
-<div  class="p-10 pl-28">
-    <h1 class="text-4xl font-bold text-purple-800 mb-6">Planify</h1>
-    <div class="flex justify-center items-center gap-2 mb-6 ">
-      <div class="flex items-center border border-white focus-within:border-purple-400 rounded-full overflow-hidden shadow-md">
-        <input   type="text"  placeholder="buscar actividad" class="h-12 w-96 px-8 text-xl outline-none border-none focus:ring-0 placeholder-gray-400"/>
-        <fa-icon [icon]="faSearch" class="text-gray-600 mr-2 text-[25px] " ></fa-icon>
-      </div>
-    </div>  
-    <div class="flex justify-center items-center gap-2 bg-cyan-400">
-      <button class="bg-purple-100 hover:bg-purple-200 rounded-lg w-14 h-14 flex items-center justify-center  ">
-        <span class="material-icons text-black text-[30px]">add</span>
-      </button>
-      <div class="h-12 w-96">
-        <h2 class="text-black font-medium text-[20px] text-center">Agregar actividad</h2>
-      </div>
+<div class="p-10 pl-28">
+  <h1 class="text-4xl font-bold text-purple-800 mb-6">Planify</h1>
+  <div class="flex justify-center items-center gap-2 mb-6">
+    <div class="flex items-center border border-white focus-within:border-purple-400 rounded-full overflow-hidden shadow-md">
+      <input
+        type="search"
+        placeholder="buscar actividad"
+        class="h-12 w-96 px-8 text-xl outline-none border-none focus:ring-0 placeholder-gray-400"
+      />
+      <fa-icon [icon]="faSearch" class="text-gray-600 mr-2 text-[25px]"></fa-icon>
+    </div>
+  </div>
+  <div class="flex justify-center items-center gap-4">
+    
+    <button
+      (click)="abrirModal()"
+      class="bg-purple-100 hover:bg-purple-200 rounded-lg w-14 h-14 flex items-center justify-center"
+    >
+      <span class="material-icons text-black text-[30px]">add</span>
+    </button>
+
+   
+    <div class="h-12 w-96 place-content-center">
+      <h2 class="text-black font-medium text-[20px] text-center">Agregar actividad</h2>
+    </div>
+
+    <div class="border-l-2 border-gray-300">
+    
+      
+      <app-activities-suggestion></app-activities-suggestion>
       
     </div>
     
-<app-activities-list></app-activities-list>
-<app-activities-suggestion></app-activities-suggestion> 
+
+   
+  </div>
+
+  <app-activities-list></app-activities-list>
+  
+  <app-modal-from-add-activities
+    (ActividadCreada)="onActividadcreada($event)"
+    *ngIf="modalAbierto"
+    (cerrar)="cerrarModal()"
+  ></app-modal-from-add-activities>  
+</div>
+
