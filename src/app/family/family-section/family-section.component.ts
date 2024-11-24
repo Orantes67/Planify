@@ -23,6 +23,7 @@ export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
   @Output() selectedFamily = new EventEmitter<FamilyI | null>();
   @Output() updatedFamilies = new EventEmitter<boolean>();
+  @Output() selectedFamilyRol = new EventEmitter<string>();
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -66,6 +67,7 @@ export class FamilySectionComponent implements OnChanges {
             rol: rol.rol,
           };
           this.familiesData.push(familyData);
+          this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
           console.error(
@@ -84,6 +86,9 @@ export class FamilySectionComponent implements OnChanges {
   selectFamily(family: FamilyI): void {
     this.selectedFamilyIn = family;
     this.selectedFamily.emit(family);
+    const role = this.getRoleForFamily(family.id_familia);
+    this.selectedFamilyRol.emit(role);
+    this.cdr.detectChanges();
     this.isDropdownOpen = false;
   }
 

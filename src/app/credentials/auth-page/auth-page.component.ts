@@ -10,10 +10,7 @@ import { UserI } from '../interfaces/user-i';
 export class AuthPageComponent {
   isRegistering = false;
 
-  constructor(
-    private router: Router,
-    private storageService: StorageService
-  ) {}
+  constructor(private router: Router, private storageService: StorageService) {}
 
   toggleAuthMode() {
     this.isRegistering = !this.isRegistering;
@@ -21,7 +18,7 @@ export class AuthPageComponent {
 
   onLoginSuccess(user: UserI) {
     this.storageService.guardarUsuario(user);
-    
+
     this.router.navigate(['/family']);
   }
 }
