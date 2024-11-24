@@ -9,4 +9,5 @@ export interface UserI {
   contrasena: string;
   usuario_id?: number;
   roles: RolI[];
+  imageid: string;
 }

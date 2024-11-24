@@ -1,11 +1,39 @@
 <div class="bg-yellow-100 p-4 rounded-lg shadow-md w-3/4 flex flex-col items-center">
-  <h3 class="text-lg font-semibold">Miembros de la familia {{family?.nombre}} - Código {{family?.id_familia}}</h3>
-  <ul>
-    <li *ngFor="let member of familyMembers" class="flex justify-between items-center mb-2 bg-lime-100 p-4 rounded-md max-w-40 min-h-20">
-      <span>{{ member.nombre }} {{ member.apellido_pat }}</span>
-      <button *ngIf="isLeader && member.usuario_id" (click)="removeMember(member.usuario_id!)" class="bg-red-500 text-white px-2 py-1 rounded">
-        Eliminar
-      </button>
+  <h3 class="text-lg font-semibold">
+    Miembros de la familia {{ family?.nombre }} - Código {{ family?.id_familia }}
+  </h3>
+  <ul class="w-full">
+    <li
+      *ngFor="let member of familyMembers"
+      class="flex items-center justify-between mb-2 bg-lime-100 p-4 rounded-md max-w-full min-h-20 cursor-pointer"
+      [class.bg-lime-300]="selectedMember?.usuario_id === member.usuario_id"
+      (click)="selectMember(member)"
+    >
+      <div class="flex items-center space-x-4 flex-grow">
+        <!-- Imagen de perfil -->
+        <img
+          [src]="
+            member.imageid
+              ? getImageUrl(member.imageid)
+              : 'assets/default-avatar.png'
+          "
+          alt="Foto de {{ member.nombre }}"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+        <!-- Nombre del miembro -->
+        <span class="text-lg font-medium">
+          {{ member.nombre }} {{ member.apellido_pat }}
+        </span>
+      </div>
+      <!-- Botón para eliminar miembro -->
+      <div *ngIf="isLeader && selectedMember?.usuario_id === member.usuario_id">
+        <button
+          (click)="removeMember(member.usuario_id!)"
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all"
+        >
+          Eliminar
+        </button>
+      </div>
     </li>
   </ul>
 </div>
