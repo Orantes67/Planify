@@ -1,6 +1,7 @@
 import { Component,OnInit,Input } from '@angular/core';
 import { Recordatorio } from '../interfaces/recordatorio';
 import { RecordatoriosService } from '../recordatorios.service';
+import { StorageService } from '../../services/storage.service';
 import { iif } from 'rxjs';
 @Component({
   selector: 'app-reminder-dashboard',
@@ -9,23 +10,44 @@ import { iif } from 'rxjs';
 })
 export class ReminderDashboardComponent implements OnInit  {
   recordatorios: Recordatorio[]=[]
-  mostrarFormulario: boolean = false;
-  constructor(private recordatorioservice:RecordatoriosService){}
+  recordatoriosFamily: Recordatorio[]=[]
+  recordatoriosPersonal: Recordatorio[]=[]
+  mostrarFormularioFamily: boolean = false;
+  mostrarFormularioPersonal: boolean = false;
+  constructor(private recordatorioservice:RecordatoriosService,private storageservice:StorageService){}
 
 
  ngOnInit(): void {
   this.cargarRecordatorios()
 }
 cargarRecordatorios(){
+this.recordatorioservice.getNotificacionesPorCategoria("familia",this.storageservice.obtenerUsuario().usuario_id).subscribe(data=>{
+  this.recordatoriosFamily=data
+  console.log(data)
+
+})
+this.recordatorioservice.getNotificacionesPorCategoria("personal",this.storageservice.obtenerUsuario().usuario_id).subscribe(data=>{
+  this.recordatoriosPersonal=data
+  console.log(data)
+})
 this.recordatorioservice.getRecordatorios().subscribe(data=>{
   this.recordatorios=data
   console.log(data)
+})
 }
-)}
+
+cargarRecordatoriosPorCategoria(){
+  }
 
 
-toggleFormulario(): void {
-  this.mostrarFormulario = !this.mostrarFormulario;
+toggleFormulario(id:number): void {
+  if(id==2){
+    this.mostrarFormularioPersonal = !this.mostrarFormularioPersonal;
+  }else if(id==1){
+    this.mostrarFormularioFamily = !this.mostrarFormularioFamily;
+
+  }
+  
 }
 
 modalAbiertoEditar = false;
