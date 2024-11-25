@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Activities } from '../interfaces/activities';
+import { ActivitiesListComponent } from '../activities-list/activities-list.component';
 
 @Component({
   selector: 'app-activities-page',
@@ -8,8 +9,9 @@ import { Activities } from '../interfaces/activities';
   styleUrls: ['./activities-page.component.css'],
 })
 export class ActivitiesPageComponent {
-  faSearch = faSearch;
+  @ViewChild(ActivitiesListComponent) activitiesListComponent!: ActivitiesListComponent;
 
+  faSearch = faSearch;
   modalAbierto = false;
   searchTerm: string = ''; 
 
@@ -23,7 +25,10 @@ export class ActivitiesPageComponent {
 
   onActividadcreada(actividad: Activities) {
     console.log('Actividad recibida desde el hijo:', actividad);
-    
+
+    // Llama al método público del componente de la lista para agregar la actividad
+    this.activitiesListComponent.agregarActividad(actividad);
+    this.cerrarModal();
   }
 
   onSearchTermChange(event: Event) {
@@ -31,3 +36,4 @@ export class ActivitiesPageComponent {
     this.searchTerm = input.value; 
   }
 }
+
