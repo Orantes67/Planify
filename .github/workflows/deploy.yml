@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: deploy  # Asegura que el entorno sea 'deploy'
+    environment: deploy
 
     steps:
       # Step 1: Checkout repository
@@ -33,9 +33,6 @@ jobs:
       - name: Build Angular app
         run: npm run build --prod
 
-      # Step 7: Verify EC2_HOST
-      - name: Verify EC2_HOST
-        run: echo "Connecting to host:${{ secrets.EC2_HOST }}"
       # Step 6: Setup SSH Key
       - name: Setup SSH Key
         run: |
@@ -44,7 +41,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-
+      - name: Verify EC2_HOST
+        run: echo "Connecting to host: ${{ secrets.EC2_HOST }}"
 
       # Step 7: Debug SSH Key Setup
       - name: Debug SSH Key Setup
@@ -68,4 +66,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           source: dist/planify/browser/*
-          target: /var/www/angular/browser
+          target: /var/www/angular/browser/
+
+      # Step 10: Reload Nginx
+      - name: Reload Nginx
+        run: ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "sudo systemctl reload nginx"
