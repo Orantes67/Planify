@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: deploy  # Asegura que el entorno sea 'deploy'
 
     steps:
       # Step 1: Checkout repository
@@ -40,11 +41,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      # Step 7: Verify EC2_HOST
       - name: Verify EC2_HOST
         run: echo "Connecting to host: ${{ secrets.EC2_HOST }}"
 
-      # Step 8: Debug SSH Key Setup
+      # Step 7: Debug SSH Key Setup
       - name: Debug SSH Key Setup
         run: |
           echo "Listing SSH directory:"
@@ -54,11 +54,11 @@ jobs:
           echo "Key permissions:"
           ls -l ~/.ssh/id_rsa
 
-      # Step 9: Test SSH Connection
+      # Step 8: Test SSH Connection
       - name: Test SSH Connection
         run: ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo 'SSH connection successful'"
 
-      # Step 10: Deploy to EC2
+      # Step 9: Deploy to EC2
       - name: Deploy to EC2
         uses: appleboy/scp-action@v0.1.6
         with:
