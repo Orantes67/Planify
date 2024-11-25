@@ -63,6 +63,12 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
     this.actividadesMostradas = 5;
   }
 
+  agregarActividad(actividad: Activities): void {
+    this.actividades.push(actividad); // Agrega a la lista original
+    this.filtrarActividades(); // Actualiza la lista filtrada
+  }
+  
+
   verMas(): void {
     this.actividadesMostradas += 5;
   }
