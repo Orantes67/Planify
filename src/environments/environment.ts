@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://127.0.0.1:8001',
-  imageApiUrl: 'http://127.0.0.1:8001',
+  apiUrl: 'https://planifyapi.integrador.xyz',
+  imageApiUrl: 'http://98.85.64.133:8000',
 };
