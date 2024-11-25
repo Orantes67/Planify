@@ -9,6 +9,15 @@
     </button>
     <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
     <form (ngSubmit)="crearRecordatorio()">
+      <div class="mb-4">
+        <label for="titulo" class="block text-gray-700">Titulo</label>
+        <input
+          id="titulo"
+          [(ngModel)]="recordatorio.titulo"
+          name="titulo"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+      </div>
       <!-- Contenido -->
       <div class="mb-4">
         <label for="contenido" class="block text-gray-700">Contenido</label>
@@ -28,7 +37,7 @@
         <input
           id="id_familia"
           type="number"
-          [(ngModel)]="recordatorio.id_familia"
+          [(ngModel)]="recordatorio.familia_id"
           name="id_familia"
           class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           required />
@@ -39,11 +48,24 @@
         <label for="hora_limite" class="block text-gray-700">Hora Límite</label>
         <input
           id="hora_limite"
-          type="time"
-          [(ngModel)]="recordatorio.hora_limite"
+          type="datetime-local"
+          [(ngModel)]="recordatorio.fecha_hora"
           name="hora_limite"
           class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           required />
+      </div>
+
+      <div class="mb-4">
+        <label for="categoria" class="block text-gray-700">Categoría</label>
+        <select
+          id="categoria"
+          [(ngModel)]="recordatorio.categoria"
+          name="categoria"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+          <option value="familia">Familia</option>
+          <option value="personal">Personal</option>
+        </select>
       </div>
 
       <!-- Botón Crear -->

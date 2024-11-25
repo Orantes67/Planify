@@ -13,7 +13,7 @@ export class ModalReminderDeleteComponent {
   constructor( private recordatoriosService:RecordatoriosService){}
   deleteRecordatorio(){
     console.log('Recordatorio eliminado', this.recordatorioCreado);
-    this.recordatoriosService.deleteRecordatorio(this.recordatorioCreado.recordatorio_id).subscribe(() => {
+    this.recordatoriosService.deleteRecordatorio(this.recordatorioCreado.notificacion_id).subscribe(() => {
       this.cerrar.emit(); 
       });
   }

@@ -1,8 +1,13 @@
 import { Time } from "@angular/common"
 
 export interface Recordatorio {
-    recordatorio_id:number
+    notificacion_id:number
+    titulo: string
     contenido:string
-    id_familia:number
-    hora_limite:string
+    fecha_hora: string
+    evento_id:number | null
+    familia_id: number | null
+    usuario_id: number | undefined
+    categoria: string
+    correo_destinatario: string | null
 }
