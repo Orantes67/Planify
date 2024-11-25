@@ -42,7 +42,7 @@ jobs:
           ssh-keyscan -H -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Verify EC2_HOST
-        run: echo "Connecting to host: ${{ secrets.EC2_HOST }}"
+        run: echo "Connecting to host:${{ secrets.EC2_HOST }}"
 
       # Step 7: Debug SSH Key Setup
       - name: Debug SSH Key Setup
