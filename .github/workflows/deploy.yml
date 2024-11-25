@@ -10,34 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Step 4: Install Angular CLI
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
+      # Step 5: Build Angular app
       - name: Build Angular app
         run: npm run build --prod
 
+      # Step 6: Setup SSH Key
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Test SSH Connection
+          
+      - name: Debug SSH Configuration
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo 'SSH connection successful'"
+        echo "Known hosts:"
+        cat ~/.ssh/known_hosts
+        echo "Key permissions:"
+        ls -l ~/.ssh/id_rsa
 
+
+      # Step 7: Test SSH Connection
+      - name: Test SSH Connection
+        run: ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo 'SSH connection successful'"
+
+      # Step 8: Deploy to EC2
       - name: Deploy to EC2
         uses: appleboy/scp-action@v0.1.6
         with:
