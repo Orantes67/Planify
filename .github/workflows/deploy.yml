@@ -42,7 +42,7 @@ jobs:
 
       # Step 7: Verify EC2_HOST
       - name: Verify EC2_HOST
-        run: echo "Connecting to host: ${{ secrets.EC2_HOST }}"
+        run: echo "Connecting to host:${{ secrets.EC2_HOST }}"
 
       # Step 8: Debug SSH Key Setup
       - name: Debug SSH Key Setup
