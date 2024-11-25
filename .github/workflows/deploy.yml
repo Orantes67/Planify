@@ -3,7 +3,7 @@ name: Deploy Angular App to EC2
 on:
   push:
     branches:
-      - develop
+      - develop  # Cambia la rama si es necesario
 
 jobs:
   deploy:
@@ -27,11 +27,17 @@ jobs:
       - name: Build Angular app
         run: npm run build --prod
 
+      # Agregar un paso de depuración para probar la conexión SSH
+      - name: Test SSH Connection
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo 'SSH connection successful'"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_KEY }}
+
       - name: Deploy to EC2
         uses: appleboy/scp-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: dist/planify/browser/*
+          source: dist/planify/browser/*  # Ajusta la ruta si es necesario
           target: /var/www/angular/browser
