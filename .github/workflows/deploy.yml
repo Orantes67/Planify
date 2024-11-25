@@ -3,7 +3,7 @@ name: Deploy Angular App to EC2
 on:
   push:
     branches:
-      - develop  # Cambia esta rama si es necesario
+      - develop  # Cambia la rama según sea necesario
 
 jobs:
   deploy:
@@ -27,9 +27,10 @@ jobs:
       - name: Build Angular app
         run: npm run build --prod
 
-      # Configurar la clave SSH
+      # Configurar la clave SSH correctamente
       - name: Setup SSH Key
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
         shell: bash
