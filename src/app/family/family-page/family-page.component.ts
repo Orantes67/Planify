@@ -12,6 +12,10 @@ export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
   selectedFamily: FamilyI | null = null;
+<<<<<<< Updated upstream
+=======
+  selectedFamilyRol: 'lider' | 'miembro' | undefined = 'miembro';
+>>>>>>> Stashed changes
 
   constructor(
     private storageService: StorageService,
@@ -22,6 +26,13 @@ export class FamilyPageComponent implements OnInit {
     this.user = this.storageService.obtenerUsuario();
   }
 
+<<<<<<< Updated upstream
+=======
+  asignSelectedFamilyRol(rol: 'lider' | 'miembro' | undefined): void {
+    this.selectedFamilyRol = rol;
+  }
+
+>>>>>>> Stashed changes
   selectFamily(family: FamilyI | null): void {
     this.selectedFamily = family;
     if (family) {

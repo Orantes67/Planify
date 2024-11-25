@@ -23,6 +23,12 @@ export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
   @Output() selectedFamily = new EventEmitter<FamilyI | null>();
   @Output() updatedFamilies = new EventEmitter<boolean>();
+<<<<<<< Updated upstream
+=======
+  @Output() selectedFamilyRol = new EventEmitter<
+    'lider' | 'miembro' | undefined
+  >();
+>>>>>>> Stashed changes
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -84,6 +90,14 @@ export class FamilySectionComponent implements OnChanges {
   selectFamily(family: FamilyI): void {
     this.selectedFamilyIn = family;
     this.selectedFamily.emit(family);
+<<<<<<< Updated upstream
+=======
+    const role: 'lider' | 'miembro' | undefined = this.getRoleForFamily(
+      family.id_familia
+    );
+    this.selectedFamilyRol.emit(role);
+    this.cdr.detectChanges();
+>>>>>>> Stashed changes
     this.isDropdownOpen = false;
   }
 
@@ -116,14 +130,16 @@ export class FamilySectionComponent implements OnChanges {
     });
   }
 
-  getRoleForFamily(familyId: number | null | undefined): string {
+  getRoleForFamily(
+    familyId: number | null | undefined
+  ): 'lider' | 'miembro' | undefined {
     if (familyId === null) {
-      return 'Sin rol';
+      return 'miembro';
     }
     const familyData = this.familiesData.find(
       (data) => data.family.id_familia === familyId
     );
-    return familyData ? familyData.rol : 'Sin rol';
+    return familyData ? familyData.rol : 'miembro';
   }
 
   joinFamily(familyIdInput: string) {

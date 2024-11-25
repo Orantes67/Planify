@@ -2,6 +2,7 @@
   <div class="flex flex-col w-3/4 space-y-4 p-4">
     <h1 class="text-3xl font-bold">Planify - Mi Familia</h1>
 
+<<<<<<< Updated upstream
     <app-family-section
       [user]="user"
       class="mb-4"
@@ -14,5 +15,20 @@
       [familyMembers]="familyMembers"
       class="mt-4"
     ></app-family-dashboard>
+=======
+      <app-family-dashboard
+        [family]="selectedFamily"
+        [familyMembers]="familyMembers"
+        class="mt-4 pl-48"
+        [familyRol]="selectedFamilyRol"
+        (updatedFamilyMembers)="updatedFamily()"
+      ></app-family-dashboard>
+
+      <app-events-dashboard
+        [familyId]="selectedFamily?.id_familia"
+        [userRole]="selectedFamilyRol"
+      ></app-events-dashboard>
+    </div>
+>>>>>>> Stashed changes
   </div>
 </div>
