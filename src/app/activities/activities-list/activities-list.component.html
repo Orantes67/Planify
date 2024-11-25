@@ -1,30 +1,71 @@
-<div class="p-4">
-   
-    <div *ngIf="actividades.length === 0" class="text-center text-gray-500">
-      No hay actividades disponibles.
+<div class="p-2">
+  <div *ngIf="actividadesFiltradas.length === 0" class="text-center text-gray-500">
+    No hay actividades disponibles.
+  </div>
+  <div
+    *ngFor="let actividad of actividadesFiltradas.slice(0, actividadesMostradas)"
+    class="border border-gray-300 rounded-lg p-3 mb-2 flex justify-between items-center gap-4 hover:shadow-md transition"
+  >
+    <div class="flex flex-col">
+      <h3 class="text-base font-semibold">{{ actividad.nombre }}</h3>
+      <p class="text-sm text-gray-500">
+        {{ actividad.fecha_inicio }} - {{ actividad.hora_inicio }}
+      </p>
     </div>
-  
-    <div *ngFor="let actividad of actividades" class="border border-gray-300 rounded-lg p-4 mb-4 flex justify-between items-center">
-      <div>
-        <h3 class="text-lg font-semibold">{{ actividad.nombre }}</h3>
-        <p class="text-sm text-gray-500">
-          {{ actividad.fecha_inicio }} - {{ actividad.hora_inicio }}
-        </p>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-sm text-gray-500">{{ actividad.fecha_fin }}</span>
-        <button class="text-gray-500">
-          <i class="fas fa-ellipsis-h"></i>
+    <div class="flex items-center gap-4">
+      <span class="text-sm text-gray-500">{{ actividad.fecha_fin }}</span>
+      <div class="relative">
+        <button
+          (click)="toggleMenu(actividad)"
+          class="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none"
+        >
+          ...
         </button>
+        <div
+          *ngIf="menuActivo === actividad.actividad_id"
+          class="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
+        >
+          <button
+            class="block w-full text-left px-4 py-2 text-yellow-600 hover:bg-yellow-50"
+            (click)="editarActividad(actividad)"
+          >
+            Editar
+          </button>
+          <button
+            class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+            (click)="eliminarActividad(actividad)"
+          >
+            Eliminar
+          </button>
+        </div>
       </div>
-    </div>
-  
- 
-    <div class="flex justify-center mt-4" *ngIf="actividades.length > 0">
-      <button class="flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg">
-        <i class="fas fa-arrow-down"></i>
-        Ver más
-      </button>
     </div>
   </div>
-  
+
+  <div class="flex justify-center mt-4" *ngIf="actividadesMostradas < actividadesFiltradas.length">
+    <button
+      (click)="verMas()"
+      class="flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition"
+    >
+      ver mas
+    </button>
+  </div>
+</div>
+
+<div *ngIf="modalEditarActivo && actividadSeleccionada" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <app-modal-from-update-activities
+  *ngIf="modalEditarActivo"
+  [actividadSeleccionada]="actividadSeleccionada"
+  (cerrar)="modalEditarActivo = false"
+  (ActividadEditada)="actualizarActividad($event)">
+</app-modal-from-update-activities>
+
+</div>
+
+<div *ngIf="modalEliminarActivo && actividadSeleccionada" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <app-modal-eliminar-activties
+    [actividadCreada]="actividadSeleccionada"
+    (cerrar)="cerrarModalEliminar()"
+    (ActividadDelete)="eliminarActividadConfirmada($event)">
+  </app-modal-eliminar-activties>
+</div>
