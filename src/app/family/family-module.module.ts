@@ -10,6 +10,8 @@ import { FamilyDashboardComponent } from './family-dashboard/family-dashboard.co
 import { FamilyPageComponent } from './family-page/family-page.component';
 import { FamilySectionComponent } from './family-section/family-section.component';
 import { ModalFamilyManageComponent } from './alerts/modal-family-manage/modal-family-manage.component';
+
+import { EventsDashboardComponent } from './events-dashboard/events-dashboard.component';
 import { FamilyService } from './services/family.service';
 
 @NgModule({
@@ -18,6 +20,7 @@ import { FamilyService } from './services/family.service';
     FamilyPageComponent,
     FamilySectionComponent,
     ModalFamilyManageComponent,
+    EventsDashboardComponent,
   ],
   imports: [
     CommonModule,

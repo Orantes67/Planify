@@ -23,7 +23,7 @@ export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
   @Output() selectedFamily = new EventEmitter<FamilyI | null>();
   @Output() updatedFamilies = new EventEmitter<boolean>();
-  @Output() selectedFamilyRol = new EventEmitter<string>();
+  @Output() selectedFamilyRol = new EventEmitter<string>(); // Combinando el tipo string
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -87,7 +87,7 @@ export class FamilySectionComponent implements OnChanges {
     this.selectedFamilyIn = family;
     this.selectedFamily.emit(family);
     const role = this.getRoleForFamily(family.id_familia);
-    this.selectedFamilyRol.emit(role);
+    this.selectedFamilyRol.emit(role); // Emitiendo el rol como string
     this.cdr.detectChanges();
     this.isDropdownOpen = false;
   }
@@ -121,14 +121,16 @@ export class FamilySectionComponent implements OnChanges {
     });
   }
 
-  getRoleForFamily(familyId: number | null | undefined): string {
+  getRoleForFamily(
+    familyId: number | null | undefined
+  ): string { // Cambié a string para combinar ambas versiones
     if (familyId === null) {
-      return 'Sin rol';
+      return 'miembro';
     }
     const familyData = this.familiesData.find(
       (data) => data.family.id_familia === familyId
     );
-    return familyData ? familyData.rol : 'Sin rol';
+    return familyData ? familyData.rol : 'miembro';
   }
 
   joinFamily(familyIdInput: string) {

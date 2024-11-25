@@ -17,6 +17,11 @@
         [familyRol]="selectedFamilyRol"
         (updatedFamilyMembers)="updatedFamily()"
       ></app-family-dashboard>
+
+      <app-events-dashboard
+        [familyId]="selectedFamily?.id_familia"
+        [userRole]="selectedFamilyRol"
+      ></app-events-dashboard>
     </div>
   </div>
 </div>

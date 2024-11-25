@@ -12,7 +12,7 @@ export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
   selectedFamily: FamilyI | null = null;
-  selectedFamilyRol: string = 'miembro';
+  selectedFamilyRol: string = 'miembro'; // Resolución combinada, usando string
 
   constructor(
     private storageService: StorageService,
