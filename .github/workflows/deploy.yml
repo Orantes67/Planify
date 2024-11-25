@@ -40,13 +40,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
           
+      # Debug SSH Configuration
       - name: Debug SSH Configuration
         run: |
-        echo "Known hosts:"
-        cat ~/.ssh/known_hosts
-        echo "Key permissions:"
-        ls -l ~/.ssh/id_rsa
-
+          echo "Known hosts:"
+          cat ~/.ssh/known_hosts
+          echo "Key permissions:"
+          ls -l ~/.ssh/id_rsa
 
       # Step 7: Test SSH Connection
       - name: Test SSH Connection
