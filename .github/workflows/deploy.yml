@@ -38,21 +38,23 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-          
-      # Debug SSH Configuration
-      - name: Debug SSH Configuration
+          ssh-keyscan -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      # Step 7: Debug SSH Key Setup
+      - name: Debug SSH Key Setup
         run: |
-          echo "Known hosts:"
+          echo "Listing SSH directory:"
+          ls -la ~/.ssh
+          echo "Contents of known_hosts:"
           cat ~/.ssh/known_hosts
           echo "Key permissions:"
           ls -l ~/.ssh/id_rsa
 
-      # Step 7: Test SSH Connection
+      # Step 8: Test SSH Connection
       - name: Test SSH Connection
         run: ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo 'SSH connection successful'"
 
-      # Step 8: Deploy to EC2
+      # Step 9: Deploy to EC2
       - name: Deploy to EC2
         uses: appleboy/scp-action@v0.1.6
         with:
