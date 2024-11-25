@@ -1,24 +1,17 @@
 import { Component } from '@angular/core';
-import { faSearch} from '@fortawesome/free-solid-svg-icons';;
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Activities } from '../interfaces/activities';
-import { ActivitiesService } from '../service/activities.service';
+
 @Component({
   selector: 'app-activities-page',
   templateUrl: './activities-page.component.html',
-  styleUrl: './activities-page.component.css'
+  styleUrls: ['./activities-page.component.css'],
 })
 export class ActivitiesPageComponent {
   faSearch = faSearch;
 
-  constructor(private actividadservice:ActivitiesService){}
-  onActividadcreada(actividad:Activities ){
-    this.actividadservice.createActividad(actividad).subscribe(()=>{
-      
-    }
-    )
-  } 
-
   modalAbierto = false;
+  searchTerm: string = ''; 
 
   abrirModal() {
     this.modalAbierto = true;
@@ -26,5 +19,15 @@ export class ActivitiesPageComponent {
 
   cerrarModal() {
     this.modalAbierto = false;
+  }
+
+  onActividadcreada(actividad: Activities) {
+    console.log('Actividad recibida desde el hijo:', actividad);
+    
+  }
+
+  onSearchTermChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm = input.value; 
   }
 }

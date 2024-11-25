@@ -1,15 +1,11 @@
-<div
-  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-  <div
-    class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
-    <button
-      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-      (click)="cerrar.emit()">
+<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+    <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-900" (click)="cerrar.emit()">
       &times;
     </button>
     <h2 class="text-xl font-bold text-center mb-4">Agregar nueva actividad</h2>
     <form (ngSubmit)="crearActividad()">
-      <!-- Contenido -->
+   
       <div class="mb-4">
         <label for="nombre" class="block text-gray-700">Titulo</label>
         <textarea
@@ -25,7 +21,6 @@
           Este campo es obligatorio.
         </div>
       </div>
-      
 
       <div class="flex gap-2"> 
         <div class="mb-4">
@@ -43,39 +38,42 @@
           </div>
         </div>
   
-      <div class="mb-4">
-        <label for="fecha_fin" class="block text-gray-700">Fecha fin</label>
-        <input
-          id="fecha_fin "
-          type="date"
-          [(ngModel)]="actividad.fecha_fin"
-          name="id_familia"
-          class="w-40   border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          (blur)="touched.fecha_fin = true"
-          required />
+        <div class="mb-4">
+          <label for="fecha_fin" class="block text-gray-700">Fecha fin</label>
+          <input
+            id="fecha_fin"
+            type="date"
+            [(ngModel)]="actividad.fecha_fin"
+            name="id_familia"
+            class="w-40 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            (blur)="touched.fecha_fin = true"
+            required />
           <div *ngIf="touched.fecha_fin && !actividad.fecha_fin" class="text-red-500 text-xs">
             Este campo es obligatorio.
           </div>
+          <div *ngIf="fechaFinInvalida" class="text-red-500 text-xs">
+            La fecha de fin no puede ser menor que la fecha de inicio.
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="flex gap-2" >
-      <div class="mb-4">
-        <label for="hora_inicio" class="block text-gray-700">Hora inicio</label>
-        <input
-          id="hora_inicio"
-          type="time"
-          [(ngModel)]="actividad.hora_inicio"
-          name="hora_limite"
-          class="w-40  border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          (blur)="touched.hora_inicio = true"
-          required />
-          <div *ngIf="touched.hora_inicio && !actividad.hora_inicio.trim()" class="text-red-500 text-xs ">
+      <div class="flex gap-2">
+        <div class="mb-4">
+          <label for="hora_inicio" class="block text-gray-700">Hora inicio</label>
+          <input
+            id="hora_inicio"
+            type="time"
+            [(ngModel)]="actividad.hora_inicio"
+            name="hora_limite"
+            class="w-40  border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            (blur)="touched.hora_inicio = true"
+            required />
+          <div *ngIf="touched.hora_inicio && !actividad.hora_inicio.trim()" class="text-red-500 text-xs">
             Este campo es obligatorio.
           </div>
-      </div>
+        </div>
   
-         <div class="mb-4">
+        <div class="mb-4">
           <label for="hora_fin" class="block text-gray-700">Hora fin</label>
           <input
             id="hora_fin"
@@ -85,12 +83,35 @@
             class="w-40  border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
             (blur)="touched.hora_fin = true"
             required />
-            <div *ngIf="touched.hora_fin && !actividad.hora_fin" class="text-red-500 text-xs">
-              Este campo es obligatorio.
-            </div>
+          <div *ngIf="touched.hora_fin && !actividad.hora_fin" class="text-red-500 text-xs">
+            Este campo es obligatorio.
+          </div>
+          <div *ngIf="horaFinInvalida" class="text-red-500 text-xs">
+            La hora de fin no puede ser menor que la hora de inicio.
+          </div>
         </div>
       </div>
-     
+      <div class="mb-4">
+        <label for="categoria" class="block text-gray-700">Categoría</label>
+        <select
+          id="categoria"
+          [(ngModel)]="actividad.categoria"
+          name="categoria"
+          class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          (blur)="touched.categoria = true"
+          required>
+          <option value="" disabled selected>Seleccione una categoría</option>
+          <option value="Trabajo">Trabajo</option>
+          <option value="Recreativa">Recreativa</option>
+          <option value="Social">Social</option>
+          <option value="Celebracion">Celebración</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <div *ngIf="touched.categoria && !actividad.categoria" class="text-red-500 text-xs">
+          Seleccionar una categoría es obligatorio.
+        </div>
+      </div>
+      
       <button
         type="submit"
         class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">

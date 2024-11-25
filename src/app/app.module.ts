@@ -9,6 +9,7 @@ import { NavigationModule } from './navigation/navigation.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { MiProfileModuleModule } from './mi-profile-module/mi-profile-module.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

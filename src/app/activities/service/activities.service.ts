@@ -16,8 +16,14 @@ export class ActivitiesService {
     return this.http.post<Activities>(this.apiUrl, actividad);
   }
 
-  getActividad(): Observable<Activities[]> {
-    return this.http.get<Activities[]>(this.apiUrl);
+  getActividad(usuario_id?: number): Observable<Activities[]> {
+    let url = this.apiUrl;
+  
+    if (usuario_id) {
+      url += `?usuario_id=${usuario_id}`; // Filtrar por usuario_id en el endpoint
+    }
+  
+    return this.http.get<Activities[]>(url);
   }
 
   deleteActividad(actividad_id: number): Observable<void> {
