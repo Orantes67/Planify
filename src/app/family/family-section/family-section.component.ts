@@ -23,12 +23,7 @@ export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
   @Output() selectedFamily = new EventEmitter<FamilyI | null>();
   @Output() updatedFamilies = new EventEmitter<boolean>();
-<<<<<<< Updated upstream
-=======
-  @Output() selectedFamilyRol = new EventEmitter<
-    'lider' | 'miembro' | undefined
-  >();
->>>>>>> Stashed changes
+  @Output() selectedFamilyRol = new EventEmitter<string>(); // Combinando el tipo string
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -72,6 +67,7 @@ export class FamilySectionComponent implements OnChanges {
             rol: rol.rol,
           };
           this.familiesData.push(familyData);
+          this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
           console.error(
@@ -90,14 +86,9 @@ export class FamilySectionComponent implements OnChanges {
   selectFamily(family: FamilyI): void {
     this.selectedFamilyIn = family;
     this.selectedFamily.emit(family);
-<<<<<<< Updated upstream
-=======
-    const role: 'lider' | 'miembro' | undefined = this.getRoleForFamily(
-      family.id_familia
-    );
-    this.selectedFamilyRol.emit(role);
+    const role = this.getRoleForFamily(family.id_familia);
+    this.selectedFamilyRol.emit(role); // Emitiendo el rol como string
     this.cdr.detectChanges();
->>>>>>> Stashed changes
     this.isDropdownOpen = false;
   }
 
@@ -132,7 +123,7 @@ export class FamilySectionComponent implements OnChanges {
 
   getRoleForFamily(
     familyId: number | null | undefined
-  ): 'lider' | 'miembro' | undefined {
+  ): string { // Cambié a string para combinar ambas versiones
     if (familyId === null) {
       return 'miembro';
     }

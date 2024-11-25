@@ -6,16 +6,21 @@ import { CredentialsModule } from './credentials/credentials-module.module';
 import { FamilyModule } from './family/family-module.module';
 import { ReminderModule } from './reminder/reminder.module';
 import { NavigationModule } from './navigation/navigation.module';
+import { ActivitiesModule } from './activities/activities.module';
+import { MiProfileModuleModule } from './mi-profile-module/mi-profile-module.module';
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MiProfileModuleModule,
     CredentialsModule,
     FamilyModule,
     ReminderModule,
     NavigationModule,
+    ActivitiesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

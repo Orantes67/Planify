@@ -1,0 +1,79 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+    <button
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+      (click)="cerrar.emit()">
+      &times;
+    </button>
+    <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
+    <form (ngSubmit)="crearRecordatorio()">
+      <div class="mb-4">
+        <label for="titulo" class="block text-gray-700">Titulo</label>
+        <input
+          id="titulo"
+          [(ngModel)]="recordatorio.titulo"
+          name="titulo"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+      </div>
+      <!-- Contenido -->
+      <div class="mb-4">
+        <label for="contenido" class="block text-gray-700">Contenido</label>
+        <textarea
+          id="contenido"
+          [(ngModel)]="recordatorio.contenido"
+          name="contenido"
+          rows="3"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+        </textarea>
+      </div>
+
+      <!-- ID Familia -->
+      <div class="mb-4">
+        <label for="id_familia" class="block text-gray-700">ID Familia</label>
+        <input
+          id="id_familia"
+          type="number"
+          [(ngModel)]="recordatorio.familia_id"
+          name="id_familia"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required />
+      </div>
+
+      <!-- Hora Límite -->
+      <div class="mb-4">
+        <label for="hora_limite" class="block text-gray-700">Hora Límite</label>
+        <input
+          id="hora_limite"
+          type="datetime-local"
+          [(ngModel)]="recordatorio.fecha_hora"
+          name="hora_limite"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required />
+      </div>
+
+      <div class="mb-4">
+        <label for="categoria" class="block text-gray-700">Categoría</label>
+        <select
+          id="categoria"
+          [(ngModel)]="recordatorio.categoria"
+          name="categoria"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required>
+          <option value="familia">Familia</option>
+          <option value="personal">Personal</option>
+        </select>
+      </div>
+
+      <!-- Botón Crear -->
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        Crear
+      </button>
+    </form>
+  </div>
+</div>

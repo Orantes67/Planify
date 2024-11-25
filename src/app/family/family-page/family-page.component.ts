@@ -12,10 +12,7 @@ export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
   selectedFamily: FamilyI | null = null;
-<<<<<<< Updated upstream
-=======
-  selectedFamilyRol: 'lider' | 'miembro' | undefined = 'miembro';
->>>>>>> Stashed changes
+  selectedFamilyRol: string = 'miembro'; // Resolución combinada, usando string
 
   constructor(
     private storageService: StorageService,
@@ -26,22 +23,22 @@ export class FamilyPageComponent implements OnInit {
     this.user = this.storageService.obtenerUsuario();
   }
 
-<<<<<<< Updated upstream
-=======
-  asignSelectedFamilyRol(rol: 'lider' | 'miembro' | undefined): void {
+  asignSelectedFamilyRol(rol: string): void {
     this.selectedFamilyRol = rol;
   }
 
->>>>>>> Stashed changes
   selectFamily(family: FamilyI | null): void {
     this.selectedFamily = family;
     if (family) {
       this.loadFamilyMembers(family.id_familia);
-    } else this.familyMembers = [];
+    } else {
+      this.familyMembers = [];
+      this.selectedFamilyRol = 'miembro';
+    }
   }
 
-  loadFamilyMembers(familyId: number | null): void {
-    if (familyId)
+  loadFamilyMembers(familyId: number | null | undefined): void {
+    if (familyId) {
       this.familyService.getUsersByFamily(familyId).subscribe({
         next: (members) => {
           this.familyMembers = members;
@@ -49,6 +46,11 @@ export class FamilyPageComponent implements OnInit {
         error: (err) =>
           console.error('Error al cargar miembros de la familia:', err),
       });
+    }
+  }
+
+  updatedFamily() {
+    this.loadFamilyMembers(this.selectedFamily?.id_familia);
   }
 
   reloadUserData(): void {
@@ -56,7 +58,6 @@ export class FamilyPageComponent implements OnInit {
       this.familyService.getUserById(this.user.usuario_id).subscribe({
         next: (updatedUser) => {
           this.user = { ...updatedUser };
-          console.log(this.user);
         },
         error: (err) =>
           console.error('Error al recargar datos del usuario:', err),

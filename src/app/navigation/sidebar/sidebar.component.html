@@ -1,44 +1,54 @@
 <div class="flex flex-col bg-purple-100 p-2 rounded-lg shadow-md w-full h-full">
-  <h1 class="text-center">{{ fechaActual }}</h1>
+  <div class="flex flex-row pl-8 py-3 text-[30px]">
+    <img class="size-10" src="logo.png" />
+    <span class="pl-10 text-4xl font-bold text-purple-800 mb-6">Planify</span>
+  </div>
+
   <hr class="m-1 border-t-2 border-gray-300" />
-  <div>
-    <ul>
+  <div class="p-5 text-[25px]">
+    <ul class=" ">
       <li
-        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+        (click)="navigation(1)"
+        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2 h-1/4"
       >
-        <fa-icon [icon]="faList" class="text-gray-600 mr-2"></fa-icon>
-        <span class="flex-1 font-semibold">Mis actividades</span>
+        <fa-icon
+          [icon]="faList"
+          class="text-gray-600 mr-2 text-[30px]"
+        ></fa-icon>
+        <span class="flex-1">Mis actividades</span>
       </li>
       <li
+        (click)="navigation(2)"
         class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
       >
-        <fa-icon [icon]="faUsers" class="text-gray-600 mr-2"></fa-icon>
-        <span class="font-semibold">Mi Familia</span>
+        <fa-icon
+          [icon]="faUsers"
+          class="text-gray-600 mr-2 text-[25px]"
+        ></fa-icon>
+        <span class="">Mi Familia</span>
       </li>
       <li
+        (click)="navigation(3)"
         class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300"
       >
-        <fa-icon [icon]="faBell" class="text-gray-600 mr-2"></fa-icon>
-        <span class="font-semibold">Recordatorio</span>
+        <fa-icon
+          [icon]="faBell"
+          class="text-gray-600 mr-2 text-[30px]"
+        ></fa-icon>
+        <span class="">Recordatorio</span>
       </li>
       <li
+        (click)="navigation(4)"
         class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
       >
         <fa-icon [icon]="faList" class="text-gray-600 mr-2"></fa-icon>
-        <span class="flex-1 font-semibold">Mi perfil</span>
+        <span class="flex-1">Mi perfil</span>
       </li>
     </ul>
   </div>
-  <div class="flex justify-center py-10">
-    <img class="w-64" src="logo.png" />
-  </div>
-  <div class="flex flex-row justify-around">
-    <fa-icon class="text-[70px]" [icon]="faFacebookSquare"></fa-icon>
-    <fa-icon class="text-[70px]" [icon]="faInstagramSquare"></fa-icon>
-    <fa-icon class="text-[70px]" [icon]="faTwitterSquare"></fa-icon>
-  </div>
+
   <div class="h-full flex items-stretch">
-    <button class="self-end" (click)="logout()">
+    <button class="self-end text-[30px]" (click)="logout()">
       <fa-icon [icon]="faLogout" class="p-2"></fa-icon>Cerrar sesión
     </button>
   </div>

@@ -48,7 +48,9 @@ export class FamilyService {
     );
   }
 
-  getRelationshipByFamilyId(familiaId: number): Observable<PerteneceI[]> {
+  getRelationshipByFamilyId(
+    familiaId: number | null | undefined
+  ): Observable<PerteneceI[]> {
     return this.http.get<PerteneceI[]>(
       `${this.perteneceApiUrl}/family/${familiaId}`
     );
@@ -74,5 +76,9 @@ export class FamilyService {
 
   getUserById(userId: number): Observable<UserI> {
     return this.http.get<UserI>(`${this.usersApiUrl}/roles/${userId}`);
+  }
+
+  removeMember(relationshipId: number | null) {
+    return this.http.delete(`${this.perteneceApiUrl}/${relationshipId}`);
   }
 }

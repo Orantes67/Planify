@@ -13,7 +13,7 @@ export class StorageService {
     this.guardarDatos(this.USER_KEY, user);
   }
 
-  obtenerUsuario(): UserI | null {
+  obtenerUsuario(): UserI {
     return this.obtenerDatos(this.USER_KEY);
   }
 
