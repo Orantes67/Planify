@@ -9,14 +9,14 @@ import { Recordatorio } from './interfaces/recordatorio';
 export class RecordatoriosService {
   private apiUrl = `${environment.apiUrl}/recordatorios`;
 
- 
-  createRecordatorio(recordatorio:Recordatorio): Observable<Recordatorio> {
+  constructor(private http: HttpClient) {}
+
+  createRecordatorio(recordatorio: Recordatorio): Observable<Recordatorio> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
 
     return this.http.post<Recordatorio>(this.apiUrl, recordatorio, { headers });
-
   }
   getRecordatorios(): Observable<Recordatorio[]> {
     return this.http.get<Recordatorio[]>(this.apiUrl);

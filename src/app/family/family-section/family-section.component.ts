@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalFamilyManageComponent } from '../alerts/modal-family-manage/modal-family-manage.component';
 import { FamiliesDataI } from '../interfaces/familiesData-i';
 import { ModalFamilyInviteComponent } from '../modal-family-invite/modal-family-invite.component';
+import { Recordatorio } from '../../reminder/interfaces/recordatorio';
 
 @Component({
   selector: 'app-family-section',
@@ -42,8 +43,6 @@ export class FamilySectionComponent implements OnChanges {
 
   ngOnInit(): void {
     if (this.user) {
-      console.log(this.user);
-
       this.loadFamilies();
     }
   }
@@ -255,6 +254,18 @@ export class FamilySectionComponent implements OnChanges {
   }
 
   inviteToFamily(email: string): void {
+    const invite: Recordatorio = {
+      notificacion_id: 0,
+      titulo: `Invitación a la familia ${this.selectedFamilyIn?.nombre}`,
+      contenido: `Codigo de la familia: ${this.selectedFamilyIn?.id_familia} unete con él`,
+      fecha_hora: new Date(new Date().getTime() + 1 * 30 * 1000).toISOString(),
+      evento_id: null,
+      familia_id: null,
+      usuario_id: 0,
+      categoria: '',
+      correo_destinatario: [email],
+    };
+
     if (!email) {
       console.error('El correo es inválido.');
       return;
