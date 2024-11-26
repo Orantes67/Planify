@@ -14,6 +14,7 @@ import { FamilyI } from '../interfaces/family-i';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFamilyManageComponent } from '../alerts/modal-family-manage/modal-family-manage.component';
 import { FamiliesDataI } from '../interfaces/familiesData-i';
+import { ModalFamilyInviteComponent } from '../modal-family-invite/modal-family-invite.component';
 
 @Component({
   selector: 'app-family-section',
@@ -25,7 +26,7 @@ export class FamilySectionComponent implements OnChanges {
   @Output() updatedFamilies = new EventEmitter<boolean>();
   @Output() selectedFamilyRol = new EventEmitter<
     'lider' | 'miembro' | undefined
-  >(); // Combinando el tipo string
+  >();
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -40,41 +41,44 @@ export class FamilySectionComponent implements OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.loadFamilies();
+    if (this.user) {
+      console.log(this.user);
+
+      this.loadFamilies();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['user']) {
-      console.log('User changed:', changes['user'].currentValue);
-      this.cdr.detectChanges();
+    if (changes['user'] && changes['user'].currentValue) {
       this.loadFamilies();
-      console.log(this.familias);
     }
   }
 
   loadFamilies(): void {
-    if (!this.user?.roles) return;
+    if (!this.user || !this.user.roles || this.user.roles.length === 0) {
+      this.familias = [];
+      this.familiesData = [];
+      this.cdr.detectChanges();
+      return;
+    }
 
-    console.log(this.user);
-
+    // Reiniciar datos antes de cargar nuevas familias
     this.familias = [];
     this.familiesData = [];
 
     this.user.roles.forEach((rol) => {
       this.familyService.getFamilyById(rol.familia_id).subscribe({
         next: (family) => {
-          this.familias.push(family);
-          const familyData: FamiliesDataI = {
-            family: family,
-            rol: rol.rol,
-          };
-          this.familiesData.push(familyData);
-          this.cdr.detectChanges(); // Forzar la detección de cambios
+          if (family) {
+            this.familias.push(family);
+            this.familiesData.push({ family, rol: rol.rol });
+          }
+          this.cdr.detectChanges();
         },
-        error: (error) => {
+        error: (err) => {
           console.error(
             `Error al cargar la familia con ID ${rol.familia_id}:`,
-            error
+            err
           );
         },
       });
@@ -89,25 +93,18 @@ export class FamilySectionComponent implements OnChanges {
     this.selectedFamilyIn = family;
     this.selectedFamily.emit(family);
     const role = this.getRoleForFamily(family.id_familia);
-    this.selectedFamilyRol.emit(role); // Emitiendo el rol como string
-    this.cdr.detectChanges();
+    this.selectedFamilyRol.emit(role);
     this.isDropdownOpen = false;
   }
 
   openInputDialog(action: 'create' | 'join'): void {
-    let dialogData: DialogDataI;
-
-    if (action === 'create') {
-      dialogData = {
-        title: 'Crear familia',
-        placeholder: 'Escribe el nombre de la familia',
-      };
-    } else {
-      dialogData = {
-        title: 'Unirse a una familia',
-        placeholder: 'Escribe el código',
-      };
-    }
+    const dialogData: DialogDataI =
+      action === 'create'
+        ? {
+            title: 'Crear familia',
+            placeholder: 'Escribe el nombre de la familia',
+          }
+        : { title: 'Unirse a una familia', placeholder: 'Escribe el código' };
 
     const dialogRef = this.dialog.open(ModalFamilyManageComponent, {
       width: '300px',
@@ -115,10 +112,12 @@ export class FamilySectionComponent implements OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && action === 'create') {
-        this.createFamily(result);
-      } else if (result && action === 'join') {
-        this.joinFamily(result);
+      if (result) {
+        if (action === 'create') {
+          this.createFamily(result);
+        } else if (action === 'join') {
+          this.joinFamily(result);
+        }
       }
     });
   }
@@ -126,28 +125,24 @@ export class FamilySectionComponent implements OnChanges {
   getRoleForFamily(
     familyId: number | null | undefined
   ): 'lider' | 'miembro' | undefined {
-    // Cambié a string para combinar ambas versiones
-    if (familyId === null) {
-      return 'miembro';
-    }
     const familyData = this.familiesData.find(
       (data) => data.family.id_familia === familyId
     );
-    return familyData ? familyData.rol : 'miembro';
+    return familyData?.rol;
   }
 
-  joinFamily(familyIdInput: string) {
+  joinFamily(familyIdInput: string): void {
     const familyId = parseInt(familyIdInput, 10);
-    if (this.user && !isNaN(familyId) && this.user.usuario_id !== undefined) {
+    if (this.user && !isNaN(familyId)) {
       this.familyService
         .joinFamily(familyId, this.user.usuario_id, 'miembro')
         .subscribe({
           next: () => {
-            console.log('Usuario añadido a la familia');
+            console.log('Unido a la familia correctamente.');
             this.updatedFamilies.emit();
             this.loadFamilies();
           },
-          error: (err) => console.error('Error al unirse a la familia', err),
+          error: (err) => console.error('Error al unirse a la familia:', err),
         });
     } else {
       console.error(
@@ -156,8 +151,8 @@ export class FamilySectionComponent implements OnChanges {
     }
   }
 
-  createFamily(familyName: string) {
-    if (this.user && this.user.usuario_id !== undefined) {
+  createFamily(familyName: string): void {
+    if (this.user) {
       this.familyService
         .createFamily(
           { nombre: familyName, id_familia: null },
@@ -165,12 +160,12 @@ export class FamilySectionComponent implements OnChanges {
         )
         .subscribe({
           next: (family) => {
-            if (family.id_familia && this.user?.usuario_id) {
+            if (family.id_familia && this.user) {
               this.familyService
                 .joinFamily(family.id_familia, this.user.usuario_id, 'lider')
                 .subscribe({
                   next: () => {
-                    console.log('Familia creada y usuario añadido como líder');
+                    console.log('Familia creada y usuario añadido como líder.');
                     this.updatedFamilies.emit();
                     this.loadFamilies();
                   },
@@ -179,14 +174,13 @@ export class FamilySectionComponent implements OnChanges {
                 });
             }
           },
-          error: (err) => console.error('Error al crear familia:', err),
+          error: (err) => console.error('Error al crear la familia:', err),
         });
     }
   }
 
   toggleContextMenu(family: FamilyI | null): void {
-    if (family)
-      this.contextMenuOpen = this.contextMenuOpen === family ? null : family;
+    this.contextMenuOpen = this.contextMenuOpen === family ? null : family;
   }
 
   renameFamily(family: FamilyI | null): void {
@@ -210,10 +204,9 @@ export class FamilySectionComponent implements OnChanges {
             id_familia: family.id_familia,
           })
           .subscribe({
-            next: (updatedFamily) => {
-              console.log('Familia renombrada:', updatedFamily);
+            next: () => {
+              console.log('Familia renombrada correctamente.');
               this.updatedFamilies.emit(true);
-              this.resetSelectedItems();
               this.loadFamilies();
             },
             error: (err) => {
@@ -225,44 +218,81 @@ export class FamilySectionComponent implements OnChanges {
   }
 
   confirmDeleteFamily(family: FamilyI | null): void {
-    if (family)
-      if (family.id_familia)
-        this.familyService.getUsersByFamily(family.id_familia).subscribe({
-          next: (members) => {
-            console.log(members);
-            
-            if (
-              members.length === 1 &&
-              members[0].usuario_id === this.user?.usuario_id
-            ) {
-              if (
-                confirm(
-                  `¿Estás seguro de eliminar la familia ${family.nombre}?`
-                )
-              ) {
-                this.deleteFamily(family);
-              }
-            } else {
-              alert(
-                'No puedes eliminar esta familia porque tiene más miembros.'
-              );
-            }
-          },
-          error: (err) => console.error('Error al verificar miembros:', err),
-        });
+    if (!family || !family.id_familia) return;
+
+    this.familyService.getUsersByFamily(family.id_familia).subscribe({
+      next: (members) => {
+        if (
+          members.length === 1 &&
+          members[0].usuario_id === this.user?.usuario_id
+        ) {
+          const confirmed = confirm(
+            `¿Estás seguro de eliminar la familia ${family.nombre}?`
+          );
+          if (confirmed) {
+            this.deleteFamily(family);
+          }
+        } else {
+          alert('No puedes eliminar esta familia porque tiene más miembros.');
+        }
+      },
+      error: (err) =>
+        console.error('Error al verificar los miembros de la familia:', err),
+    });
   }
 
   deleteFamily(family: FamilyI): void {
-    if (family.id_familia) {
-      this.familyService.deleteFamily(family.id_familia).subscribe({
-        next: () => {
-          console.log(`Familia ${family.nombre} eliminada.`);
-          this.resetSelectedItems();
-          this.loadFamilies();
-        },
-        error: (err) => console.error('Error al eliminar familia:', err),
-      });
+    if (!family.id_familia) return;
+
+    this.familyService.deleteFamily(family.id_familia).subscribe({
+      next: () => {
+        console.log(`Familia ${family.nombre} eliminada.`);
+        this.loadFamilies();
+        this.resetSelectedItems();
+      },
+      error: (err) => console.error('Error al eliminar la familia:', err),
+    });
+  }
+
+  inviteToFamily(email: string): void {
+    if (!email) {
+      console.error('El correo es inválido.');
+      return;
     }
+
+    if (!this.selectedFamilyIn) {
+      console.error(
+        'No hay una familia seleccionada para enviar la invitación.'
+      );
+      return;
+    }
+
+    const familyId = this.selectedFamilyIn.id_familia;
+
+    // Llama al servicio para enviar el correo
+    this.familyService.sendFamilyInvite(email, familyId).subscribe({
+      next: () => {
+        console.log(`Invitación enviada a ${email}.`);
+        alert(`Se ha enviado una invitación a ${email}.`);
+      },
+      error: (err) => {
+        console.error('Error al enviar la invitación:', err);
+        alert('Ocurrió un error al enviar la invitación.');
+      },
+    });
+  }
+
+  openInviteDialog(): void {
+    const dialogRef = this.dialog.open(ModalFamilyInviteComponent, {
+      width: '400px',
+      data: { familyName: this.selectedFamilyIn?.nombre || 'la familia' },
+    });
+
+    dialogRef.afterClosed().subscribe((email) => {
+      if (email) {
+        this.inviteToFamily(email);
+      }
+    });
   }
 
   resetSelectedItems(): void {

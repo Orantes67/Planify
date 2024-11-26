@@ -16,7 +16,10 @@ export class FamilyService {
 
   constructor(private http: HttpClient) {}
 
-  createFamily(family: FamilyI, userId: number): Observable<FamilyI> {
+  createFamily(
+    family: FamilyI,
+    userId: number | undefined
+  ): Observable<FamilyI> {
     return this.http.post<FamilyI>(`${this.apiUrl}`, {
       ...family,
       userId,
@@ -24,8 +27,8 @@ export class FamilyService {
   }
 
   joinFamily(
-    familyCode: number,
-    userId: number,
+    familyCode: number | undefined,
+    userId: number | undefined,
     rol: string
   ): Observable<PerteneceI> {
     const relationBody: PerteneceI = {
@@ -74,11 +77,16 @@ export class FamilyService {
     return this.http.put<FamilyI>(`${this.apiUrl}/${familiaId}`, updatedFamily);
   }
 
-  getUserById(userId: number): Observable<UserI> {
+  getUserById(userId: number | undefined): Observable<UserI> {
     return this.http.get<UserI>(`${this.usersApiUrl}/roles/${userId}`);
   }
 
   removeMember(relationshipId: number | null) {
     return this.http.delete(`${this.perteneceApiUrl}/${relationshipId}`);
+  }
+
+  sendFamilyInvite(email: string, familyId: number | null): Observable<void> {
+    const url = `/api/families/${familyId}/invite`;
+    return this.http.post<void>(url, { email });
   }
 }

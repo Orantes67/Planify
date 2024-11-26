@@ -20,7 +20,10 @@ export class FamilyPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.storageService.obtenerUsuario();
+    const userStorage: UserI = this.storageService.obtenerUsuario();
+    this.familyService.getUserById(userStorage.usuario_id).subscribe((user) => {
+      this.user = user;
+    });
   }
 
   asignSelectedFamilyRol(rol: 'lider' | 'miembro' | undefined): void {
