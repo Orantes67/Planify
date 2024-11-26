@@ -10,7 +10,8 @@ import { ActivitiesModule } from './activities/activities.module';
 import { MiProfileModuleModule } from './mi-profile-module/mi-profile-module.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,6 +23,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ReminderModule,
     NavigationModule,
     ActivitiesModule,
+    MatSnackBarModule
   ],
   providers: [
     {
@@ -29,6 +31,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

@@ -1,12 +1,22 @@
+
 <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-purple-200 rounded-lg shadow-lg w-full max-w-sm p-6 relative mx-4">
     <button
-    class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none"
-    (click)="cerrar.emit()">
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+      (click)="cerrar.emit()">
       &times;
-    </button>
-    <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
-    
+    </button>    
+    <h2 class="text-xl font-bold text-center mb-4">Editar Recordatorio</h2>
+    <!-- Alerta de éxito o error -->
+<div
+*ngIf="alerta"
+class="text-center text-sm mb-4 px-4 py-2 rounded"
+[ngClass]="{
+  'bg-green-200 text-green-800': alerta.estilo === 'exito',
+  'bg-red-200 text-red-800': alerta.estilo === 'error'
+}">
+{{ alerta.mensaje }}
+</div>
     <form (ngSubmit)="editarRecordatorio()">
       <!-- Título -->
       <div class="mb-4">
@@ -32,16 +42,7 @@
         </textarea>
       </div>
 
-      <!-- ID Familia -->
-      <div class="mb-4">
-        <label for="id_familia" class="block text-gray-700 text-sm">ID Familia</label>
-        <input
-          id="id_familia"
-          type="number"
-          [(ngModel)]="recordatorioCreado.familia_id"
-          name="id_familia"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-      </div>
+      
 
       <!-- Hora Límite -->
       <div class="mb-4">
@@ -81,11 +82,11 @@
           required>
       </div>
 
-      <!-- Botón Crear -->
+      <!-- Botón Editar -->
       <button
         type="submit"
         class="w-full bg-blue-500 text-white py-2 text-sm rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-        Crear
+        Editar
       </button>
     </form>
   </div>

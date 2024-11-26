@@ -1,11 +1,22 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
+
+<div *ngIf="alerta" class="text-center text-sm mb-4 px-4 py-2 rounded"
+  [ngClass]="{
+    'bg-green-200 text-green-800': alerta.estilo === 'exito',
+    'bg-red-200 text-red-800': alerta.estilo === 'error'
+  }">
+  {{ alerta.mensaje }}
+</div>
+
 <div mat-dialog-content>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="w-full">
     <mat-label>{{ data.placeholder }}</mat-label>
-    <input matInput [(ngModel)]="inputData" />
+    <input matInput [(ngModel)]="inputData" (blur)="touched = true" />
+    <mat-error *ngIf="touched && !inputData.trim()">Este campo es obligatorio.</mat-error>
   </mat-form-field>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button (click)="closeDialog()">Cancelar</button>
-  <button mat-button color="primary" (click)="saveInput()">Guardar</button>
+  <button mat-button color="primary" (click)="saveInput()" >Guardar</button>
 </div>
