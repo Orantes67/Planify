@@ -19,7 +19,7 @@ export class ModalFromAddActivitiesComponent {
     fecha_fin: '',
     hora_fin: '',
     categoria: '',
-    usuario_id:0,
+    usuario_id: 0,
     familia_id: 0,
     actividad_id: 0,
   };
@@ -30,7 +30,7 @@ export class ModalFromAddActivitiesComponent {
     hora_inicio: false,
     fecha_fin: false,
     hora_fin: false,
-    categoria: false
+    categoria: false,
   };
 
   fechaFinInvalida = false;
@@ -52,22 +52,21 @@ export class ModalFromAddActivitiesComponent {
     );
   }
 
-  
   validarFechasYHoras(): boolean {
     const fechaInicio = new Date(this.actividad.fecha_inicio);
     const fechaFin = new Date(this.actividad.fecha_fin);
 
-    
-    const [horaInicioH, horaInicioM] = this.actividad.hora_inicio.split(':').map(Number);
+    const [horaInicioH, horaInicioM] = this.actividad.hora_inicio
+      .split(':')
+      .map(Number);
     const [horaFinH, horaFinM] = this.actividad.hora_fin.split(':').map(Number);
 
     const horaInicio = new Date(fechaInicio);
-    horaInicio.setHours(horaInicioH, horaInicioM, 0, 0); 
+    horaInicio.setHours(horaInicioH, horaInicioM, 0, 0);
 
     const horaFin = new Date(fechaFin);
-    horaFin.setHours(horaFinH, horaFinM, 0, 0); 
+    horaFin.setHours(horaFinH, horaFinM, 0, 0);
 
-    
     if (fechaFin < fechaInicio) {
       this.fechaFinInvalida = true;
       return false;
@@ -75,7 +74,6 @@ export class ModalFromAddActivitiesComponent {
       this.fechaFinInvalida = false;
     }
 
-   
     if (horaFin < horaInicio) {
       this.horaFinInvalida = true;
       return false;
@@ -92,8 +90,7 @@ export class ModalFromAddActivitiesComponent {
       return;
     }
 
-
-    this.actividad.usuario_id=this.storageService.obtenerUsuario().usuario_id
+    this.actividad.usuario_id = this.storageService.obtenerUsuario().usuario_id;
 
     this.actividadService.createActividad(this.actividad).subscribe({
       next: (response) => {
@@ -116,7 +113,7 @@ export class ModalFromAddActivitiesComponent {
       fecha_fin: '',
       hora_fin: '',
       categoria: '',
-      usuario_id:0,
+      usuario_id: 0,
       familia_id: 0,
       actividad_id: 0,
     };
@@ -128,8 +125,7 @@ export class ModalFromAddActivitiesComponent {
       hora_inicio: false,
       fecha_fin: false,
       hora_fin: false,
-      categoria: false, 
+      categoria: false,
     };
   }
-  
 }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FamilyI } from '../interfaces/family-i';
 import { UserI } from '../../credentials/interfaces/user-i';
 import { environment } from '../../../environments/environment';
 import { PerteneceI } from '../interfaces/pertenece-i';
+import { Recordatorio } from '../../reminder/interfaces/recordatorio';
+import { InviteI } from '../interfaces/invite-i';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,8 @@ export class FamilyService {
   private apiUrl = `${environment.apiUrl}/familias`;
   private usersApiUrl = `${environment.apiUrl}/usuarios`;
   private perteneceApiUrl = `${environment.apiUrl}/pertenece`;
+
+  private remainderApiUrl = `${environment.apiUrl}/recordatorios`;
 
   constructor(private http: HttpClient) {}
 
@@ -85,8 +89,10 @@ export class FamilyService {
     return this.http.delete(`${this.perteneceApiUrl}/${relationshipId}`);
   }
 
-  sendFamilyInvite(email: string, familyId: number | null): Observable<void> {
-    const url = `/api/families/${familyId}/invite`;
-    return this.http.post<void>(url, { email });
+  sendFamilyInvite(email: InviteI): Observable<InviteI> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    return this.http.post<InviteI>(this.remainderApiUrl, email, { headers });
   }
 }

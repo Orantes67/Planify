@@ -7,7 +7,7 @@ export interface UserI {
   correo: string;
   familia_id: number;
   contrasena: string;
-  usuario_id: number;
+  usuario_id: number | undefined;
   roles: RolI[];
   imageid: string;
 }
