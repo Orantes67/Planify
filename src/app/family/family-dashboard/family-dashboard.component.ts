@@ -18,6 +18,7 @@ import { PerteneceI } from '../interfaces/pertenece-i';
   templateUrl: './family-dashboard.component.html',
 })
 export class FamilyDashboardComponent implements OnInit, OnChanges {
+  @Input() user: UserI | null = null;
   @Input() familyMembers: UserI[] = [];
   @Input() isLeader: boolean = false;
   @Input() family: FamilyI | null = null;

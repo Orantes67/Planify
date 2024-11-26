@@ -13,6 +13,7 @@ import { ModalFamilyManageComponent } from './alerts/modal-family-manage/modal-f
 
 import { EventsDashboardComponent } from './events-dashboard/events-dashboard.component';
 import { FamilyService } from './services/family.service';
+import { ModalFamilyInviteComponent } from './modal-family-invite/modal-family-invite.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FamilyService } from './services/family.service';
     FamilySectionComponent,
     ModalFamilyManageComponent,
     EventsDashboardComponent,
+    ModalFamilyInviteComponent,
   ],
   imports: [
     CommonModule,

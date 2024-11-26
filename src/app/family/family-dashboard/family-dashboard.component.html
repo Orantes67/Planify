@@ -1,6 +1,9 @@
-<div class="bg-yellow-100 p-4 rounded-lg shadow-md w-3/4 flex flex-col items-center">
+<div
+  class="bg-yellow-100 p-4 rounded-lg shadow-md w-3/4 flex flex-col items-center"
+>
   <h3 class="text-lg font-semibold">
-    Miembros de la familia {{ family?.nombre }} - Código {{ family?.id_familia }}
+    Miembros de la familia {{ family?.nombre }} - Código
+    {{ family?.id_familia }}
   </h3>
   <ul class="w-full">
     <li
@@ -26,7 +29,13 @@
         </span>
       </div>
       <!-- Botón para eliminar miembro -->
-      <div *ngIf="isLeader && selectedMember?.usuario_id === member.usuario_id">
+      <div
+        *ngIf="
+          isLeader &&
+          selectedMember?.usuario_id === member.usuario_id &&
+          selectedMember?.usuario_id !== user?.usuario_id
+        "
+      >
         <button
           (click)="removeMember(member.usuario_id!)"
           class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all"
