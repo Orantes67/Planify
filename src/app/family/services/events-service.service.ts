@@ -13,7 +13,7 @@ export class EventsService {
   constructor(private http: HttpClient) {}
 
   getEventsByFamilyId(familyId: number): Observable<EventI[]> {
-    return this.http.get<EventI[]>(`${this.apiUrl}/?familia_id=${familyId}`);
+    return this.http.get<EventI[]>(`${this.apiUrl}/familia/${familyId}`);
   }
 
   createEvent(event: EventCreateOrUpdateI): Observable<EventI> {
