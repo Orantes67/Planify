@@ -18,6 +18,7 @@ export class ModalFromAddActivitiesComponent {
     hora_inicio: '',
     fecha_fin: '',
     hora_fin: '',
+    usuario_id:0,
     categoria: '',
     familia_id: 0,
     actividad_id: 0,
@@ -91,20 +92,8 @@ export class ModalFromAddActivitiesComponent {
       return;
     }
 
-    const usuario = this.storageService.obtenerUsuario();
-    console.log('Usuario obtenido de localStorage:', usuario);
 
-    if (!usuario) {
-      console.error('No se encontró ningún usuario almacenado en localStorage.');
-      return;
-    }
-
-    if (usuario.roles && usuario.roles.length > 0 && usuario.roles[0].familia_id) {
-      this.actividad.familia_id = usuario.roles[0].familia_id;
-    } else {
-      console.error('No se encontró familia_id en los roles del usuario:', usuario.roles);
-      return;
-    }
+    this.actividad.usuario_id=this.storageService.obtenerUsuario().usuario_id
 
     this.actividadService.createActividad(this.actividad).subscribe({
       next: (response) => {
@@ -126,6 +115,7 @@ export class ModalFromAddActivitiesComponent {
       hora_inicio: '',
       fecha_fin: '',
       hora_fin: '',
+      usuario_id:0,
       categoria: '',
       familia_id: 0,
       actividad_id: 0,
