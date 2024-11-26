@@ -23,7 +23,9 @@ export class FamilySectionComponent implements OnChanges {
   @Input() user: UserI | null = null;
   @Output() selectedFamily = new EventEmitter<FamilyI | null>();
   @Output() updatedFamilies = new EventEmitter<boolean>();
-  @Output() selectedFamilyRol = new EventEmitter<string>(); // Combinando el tipo string
+  @Output() selectedFamilyRol = new EventEmitter<
+    'lider' | 'miembro' | undefined
+  >(); // Combinando el tipo string
 
   familias: FamilyI[] = [];
   familiesData: FamiliesDataI[] = [];
@@ -123,7 +125,8 @@ export class FamilySectionComponent implements OnChanges {
 
   getRoleForFamily(
     familyId: number | null | undefined
-  ): string { // Cambié a string para combinar ambas versiones
+  ): 'lider' | 'miembro' | undefined {
+    // Cambié a string para combinar ambas versiones
     if (familyId === null) {
       return 'miembro';
     }
