@@ -39,18 +39,26 @@ export class ModalFromUpdateActivitiesComponent implements OnChanges {
 
   constructor(private actividadService: ActivitiesService) {}
 
-
   editarActividad(): void {
     if (this.validarFechasYHoras() && this.validarCampos()) {
-      this.ActividadEditada.emit(this.actividad);
-      this.cerrar.emit();
+      
+      this.actividadService.updateActividad(this.actividad.actividad_id, this.actividad).subscribe({
+        next: (actividadActualizada) => {
+          this.ActividadEditada.emit(actividadActualizada); 
+          this.cerrar.emit(); 
+        },
+        error: (err) => {
+          console.error('Error al actualizar la actividad:', err);
+         
+        }
+      });
     }
   }
   
   ngOnChanges(changes: SimpleChanges): void {
     console.log('ngOnChanges triggered', changes);
     if (changes['actividadSeleccionada'] && this.actividadSeleccionada) {
-      this.actividad = { ...this.actividadSeleccionada }; // Cargar los datos de la actividad seleccionada
+      this.actividad = { ...this.actividadSeleccionada }; 
       console.log('Actividad cargada:', this.actividad);
       this.fechaFinInvalida = false;
       this.horaFinInvalida = false;

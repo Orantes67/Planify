@@ -25,8 +25,6 @@ export class ActivitiesPageComponent {
 
   onActividadcreada(actividad: Activities) {
     console.log('Actividad recibida desde el hijo:', actividad);
-
-    // Llama al método público del componente de la lista para agregar la actividad
     this.activitiesListComponent.agregarActividad(actividad);
     this.cerrarModal();
   }

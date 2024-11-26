@@ -13,6 +13,7 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
   actividades: Activities[] = [];
   actividadesFiltradas: Activities[] = [];
   actividadesMostradas: number = 5;
+  usuario_id: number | null = null;
   mostrarFormulario: boolean = false;
   actividadSeleccionada: Activities | null = null;
   modalEditarActivo: boolean = false;
@@ -25,7 +26,8 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.cargarActividades();
+    this.obtenerUsuarioId();
+    this.cargarActividadesDesdeLocalStorage();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -34,25 +36,47 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
     }
   }
 
-  cargarActividades(): void {
+  obtenerUsuarioId(): void {
     const usuario = this.storageService.obtenerUsuario();
-    const usuario_id = usuario?.usuario_id;
+    this.usuario_id = usuario?.usuario_id || null;
 
-    if (usuario_id) {
-      this.actividadService.getActividad(usuario_id).subscribe({
-        next: (data) => {
-          this.actividades = data.filter(
-            (actividad) => actividad.nombre && actividad.fecha_inicio
-          );
-          this.filtrarActividades();
-        },
-        error: (err) => {
-          console.error('Error al cargar actividades:', err);
-        },
-      });
-    } else {
+    if (!this.usuario_id) {
       console.error('Usuario no encontrado o no tiene un usuario_id');
     }
+  }
+
+  cargarActividadesDesdeLocalStorage(): void {
+    const actividadesGuardadas = localStorage.getItem('actividades');
+    if (actividadesGuardadas) {
+      this.actividades = JSON.parse(actividadesGuardadas);
+      this.filtrarActividades();
+    } else {
+      this.cargarActividadesDesdeServicio();
+    }
+  }
+
+  cargarActividadesDesdeServicio(): void {
+    this.actividadService.getActividad().subscribe({
+      next: (data) => {
+        if (this.usuario_id) {
+          this.actividades = data.filter(
+            (actividad) => actividad.familia_id === this.usuario_id
+          );
+          this.guardarActividadesEnLocalStorage();
+          this.filtrarActividades();
+        } else {
+          this.actividades = [];
+          console.warn('No se encontraron actividades para el usuario');
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar actividades:', err);
+      },
+    });
+  }
+
+  guardarActividadesEnLocalStorage(): void {
+    localStorage.setItem('actividades', JSON.stringify(this.actividades));
   }
 
   filtrarActividades(): void {
@@ -64,10 +88,10 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
   }
 
   agregarActividad(actividad: Activities): void {
-    this.actividades.push(actividad); // Agrega a la lista original
-    this.filtrarActividades(); // Actualiza la lista filtrada
+    this.actividades.push(actividad);
+    this.guardarActividadesEnLocalStorage();
+    this.filtrarActividades();
   }
-  
 
   verMas(): void {
     this.actividadesMostradas += 5;
@@ -98,15 +122,19 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
       (act) => act.actividad_id === actividadEditada.actividad_id
     );
     if (index !== -1) {
-      this.actividades[index] = actividadEditada;
-      this.filtrarActividades();
+      this.actividades[index] = actividadEditada; 
+      this.guardarActividadesEnLocalStorage(); 
+      this.filtrarActividades(); 
     }
   }
+  
 
   eliminarActividadConfirmada(id: number): void {
-    this.actividadesFiltradas = this.actividadesFiltradas.filter(
+    this.actividades = this.actividades.filter(
       (actividad) => actividad.actividad_id !== id
     );
+    this.guardarActividadesEnLocalStorage();
+    this.filtrarActividades();
     this.cerrarModalEliminar();
   }
 
@@ -119,4 +147,4 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
     this.modalEditarActivo = true;
   }
 }
-
+  
