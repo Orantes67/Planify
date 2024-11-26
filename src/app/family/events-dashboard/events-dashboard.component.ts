@@ -28,7 +28,10 @@ export class EventsDashboardComponent implements OnChanges {
   constructor(private eventsService: EventsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['familyId'] && changes['familyId'].currentValue) {
+    if (
+      changes['familyId'] &&
+      changes['familyId'].currentValue !== changes['familyId'].previousValue
+    ) {
       this.loadEvents();
     }
   }
@@ -36,12 +39,14 @@ export class EventsDashboardComponent implements OnChanges {
   openAddEventModal(): void {
     this.isAddEventModalOpen = true;
   }
-  
+
   closeAddEventModal(): void {
     this.isAddEventModalOpen = false;
   }
 
   loadEvents(): void {
+    this.events = [];
+
     if (!this.familyId) return;
     this.eventsService.getEventsByFamilyId(this.familyId).subscribe({
       next: (data) => (this.events = data),
