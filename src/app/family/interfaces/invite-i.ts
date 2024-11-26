@@ -1,6 +1,4 @@
-import { Time } from '@angular/common';
-
-export interface Recordatorio {
+export interface InviteI {
   notificacion_id: number | null;
   titulo: string;
   contenido: string;

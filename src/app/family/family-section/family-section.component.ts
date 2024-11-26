@@ -16,6 +16,7 @@ import { ModalFamilyManageComponent } from '../alerts/modal-family-manage/modal-
 import { FamiliesDataI } from '../interfaces/familiesData-i';
 import { ModalFamilyInviteComponent } from '../modal-family-invite/modal-family-invite.component';
 import { Recordatorio } from '../../reminder/interfaces/recordatorio';
+import { InviteI } from '../interfaces/invite-i';
 
 @Component({
   selector: 'app-family-section',
@@ -254,18 +255,6 @@ export class FamilySectionComponent implements OnChanges {
   }
 
   inviteToFamily(email: string): void {
-    const invite: Recordatorio = {
-      notificacion_id: 0,
-      titulo: `Invitación a la familia ${this.selectedFamilyIn?.nombre}`,
-      contenido: `Codigo de la familia: ${this.selectedFamilyIn?.id_familia} unete con él`,
-      fecha_hora: new Date(new Date().getTime() + 1 * 30 * 1000).toISOString(),
-      evento_id: null,
-      familia_id: null,
-      usuario_id: 0,
-      categoria: '',
-      correo_destinatario: [email],
-    };
-
     if (!email) {
       console.error('El correo es inválido.');
       return;
@@ -278,16 +267,28 @@ export class FamilySectionComponent implements OnChanges {
       return;
     }
 
-    const familyId = this.selectedFamilyIn.id_familia;
+    const invite: InviteI = {
+      notificacion_id: 0,
+      titulo: `Invitación a la familia ${this.selectedFamilyIn?.nombre}`,
+      contenido: `Codigo de la familia: ${this.selectedFamilyIn?.id_familia} unete con él`,
+      fecha_hora: new Date(new Date().getTime() + 1 * 30 * 1000).toISOString(),
+      evento_id: null,
+      familia_id: null,
+      usuario_id: 83,
+      categoria: 'familia',
+      correo_destinatario: [`${email}`],
+    };
 
-    // Llama al servicio para enviar el correo
-    this.familyService.sendFamilyInvite(email, familyId).subscribe({
+    console.log(invite);
+
+    this.familyService.sendFamilyInvite(invite).subscribe({
       next: () => {
         console.log(`Invitación enviada a ${email}.`);
         alert(`Se ha enviado una invitación a ${email}.`);
       },
       error: (err) => {
         console.error('Error al enviar la invitación:', err);
+
         alert('Ocurrió un error al enviar la invitación.');
       },
     });

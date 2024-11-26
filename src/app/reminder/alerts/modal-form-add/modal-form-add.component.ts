@@ -1,12 +1,12 @@
-import { Component,Inject, EventEmitter, Output} from '@angular/core';
-import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, EventEmitter, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Recordatorio } from '../../interfaces/recordatorio';
 import { RecordatoriosService } from '../../recordatorios.service';
 import { StorageService } from '../../../services/storage.service';
 @Component({
   selector: 'app-modal-form-add',
   templateUrl: './modal-form-add.component.html',
-  styleUrl: './modal-form-add.component.css'
+  styleUrl: './modal-form-add.component.css',
 })
 export class ModalFormAddComponent {
   @Output() cerrar = new EventEmitter<void>();
@@ -20,10 +20,10 @@ export class ModalFormAddComponent {
     familia_id: null,
     usuario_id: 0,
     categoria: '',
-    correo_destinatario: []
+    correo_destinatario: [],
   };
 
-  correos: string = '';  
+  correos: string = '';
 
   constructor(
     private recordatoriosService: RecordatoriosService,
@@ -31,7 +31,6 @@ export class ModalFormAddComponent {
   ) {}
 
   crearRecordatorio(): void {
-   
     const usuario = this.storageService.obtenerUsuario();
     if (usuario) {
       this.recordatorio.usuario_id = usuario.usuario_id;
@@ -41,7 +40,9 @@ export class ModalFormAddComponent {
     }
 
     if (this.correos.trim()) {
-      this.recordatorio.correo_destinatario = this.correos.split(',').map(correo => correo.trim());
+      this.recordatorio.correo_destinatario = this.correos
+        .split(',')
+        .map((correo) => correo.trim());
     } else {
       this.recordatorio.correo_destinatario = [];
     }
@@ -54,9 +55,9 @@ export class ModalFormAddComponent {
     this.recordatoriosService.createRecordatorio(this.recordatorio).subscribe(
       (respuesta) => {
         console.log('Recordatorio creado:', respuesta);
-      
-        this.resetForm();  
-        this.cerrar.emit();  
+
+        this.resetForm();
+        this.cerrar.emit();
       },
       (error) => {
         console.error('Error al crear el recordatorio:', error);
@@ -74,8 +75,8 @@ export class ModalFormAddComponent {
       familia_id: null,
       usuario_id: 0,
       categoria: '',
-      correo_destinatario: []
+      correo_destinatario: [],
     };
-    this.correos = ''; 
+    this.correos = '';
   }
 }
