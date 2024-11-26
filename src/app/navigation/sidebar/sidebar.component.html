@@ -1,6 +1,10 @@
-<!-- Sidebar para pantallas grandes -->
 <div class="hidden lg:block bg-purple-100 p-2 rounded-lg shadow-md w-full h-full">
   <div class="p-5 text-[25px]">
+    <h1 class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-16">
+      PLANIFY
+  </h1>
+  <hr class="border-t-4 border-purple-800 hidden lg:block">
+  
     <ul>
       <li
         (click)="navigation(1)"
@@ -32,13 +36,13 @@
       </li>
     </ul>
   </div>
-
   <!-- Botón de cierre de sesión -->
-  <div class="mt-auto flex justify-center">
+  <div class="mt-auto flex justify-center pt-60 pr-10">
     <button (click)="logout()" class="self-end text-[30px] focus:outline-none flex items-center">
       <fa-icon [icon]="faLogout" class="text-gray-600 p-2"></fa-icon>
       <span class="text-gray-700">Cerrar sesión</span>
     </button>
+
   </div>
 </div>
 
