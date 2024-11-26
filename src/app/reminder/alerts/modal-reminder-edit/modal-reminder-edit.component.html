@@ -1,8 +1,8 @@
 <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+  <div class="bg-purple-200 rounded-lg shadow-lg w-full max-w-sm p-6 relative mx-4">
     <button
-      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-      (click)="cerrar.emit()">
+    class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+    (click)="cerrar.emit()">
       &times;
     </button>
     <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
@@ -10,59 +10,59 @@
     <form (ngSubmit)="editarRecordatorio()">
       <!-- Título -->
       <div class="mb-4">
-        <label for="titulo" class="block text-gray-700">Título</label>
+        <label for="titulo" class="block text-gray-700 text-sm">Título</label>
         <input
           id="titulo"
           [(ngModel)]="recordatorioCreado.titulo"
           name="titulo"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           required>
       </div>
 
       <!-- Contenido -->
       <div class="mb-4">
-        <label for="contenido" class="block text-gray-700">Contenido</label>
+        <label for="contenido" class="block text-gray-700 text-sm">Contenido</label>
         <textarea
           id="contenido"
           [(ngModel)]="recordatorioCreado.contenido"
           name="contenido"
           rows="3"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           required>
         </textarea>
       </div>
 
       <!-- ID Familia -->
       <div class="mb-4">
-        <label for="id_familia" class="block text-gray-700">ID Familia</label>
+        <label for="id_familia" class="block text-gray-700 text-sm">ID Familia</label>
         <input
           id="id_familia"
           type="number"
           [(ngModel)]="recordatorioCreado.familia_id"
           name="id_familia"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
       </div>
 
       <!-- Hora Límite -->
       <div class="mb-4">
-        <label for="hora_limite" class="block text-gray-700">Hora Límite</label>
+        <label for="hora_limite" class="block text-gray-700 text-sm">Hora Límite</label>
         <input
           id="hora_limite"
           type="datetime-local"
           [(ngModel)]="recordatorioCreado.fecha_hora"
           name="hora_limite"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           required />
       </div>
 
       <!-- Categoría -->
       <div class="mb-4">
-        <label for="categoria" class="block text-gray-700">Categoría</label>
+        <label for="categoria" class="block text-gray-700 text-sm">Categoría</label>
         <select
           id="categoria"
           [(ngModel)]="recordatorioCreado.categoria"
           name="categoria"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           required>
           <option value="familia">Familia</option>
           <option value="personal">Personal</option>
@@ -71,12 +71,12 @@
 
       <!-- Correos Destinatarios -->
       <div class="mb-4">
-        <label for="correo_destinatario" class="block text-gray-700">Correos Destinatarios (separados por comas)</label>
+        <label for="correo_destinatario" class="block text-gray-700 text-sm">Correos Destinatarios (separados por comas)</label>
         <input
           id="correo_destinatario"
           [(ngModel)]="correos"
           name="correo_destinatario"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           placeholder="correo1@example.com, correo2@example.com"
           required>
       </div>
@@ -84,8 +84,8 @@
       <!-- Botón Crear -->
       <button
         type="submit"
-        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-        Guardar
+        class="w-full bg-blue-500 text-white py-2 text-sm rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        Crear
       </button>
     </form>
   </div>
