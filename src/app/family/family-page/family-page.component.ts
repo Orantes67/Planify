@@ -11,25 +11,60 @@ import { StorageService } from '../../services/storage.service';
 export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
-  isLeader: boolean = false;
-  family: FamilyI | null = null;
+  selectedFamily: FamilyI | null = null;
+  selectedFamilyRol: 'lider' | 'miembro' | undefined = 'miembro'; // Resolución combinada, usando string
 
   constructor(
-    private familyService: FamilyService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private familyService: FamilyService
   ) {}
 
   ngOnInit(): void {
-    this.user = this.storageService.obtenerUsuario();
-    if (this.user) {
-      this.isLeader = this.user.rol === 'líder';
-      this.loadFamilyData(this.user.familia_id);
+    const userStorage: UserI = this.storageService.obtenerUsuario();
+    this.familyService.getUserById(userStorage.usuario_id).subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  asignSelectedFamilyRol(rol: 'lider' | 'miembro' | undefined): void {
+    this.selectedFamilyRol = rol;
+  }
+
+  selectFamily(family: FamilyI | null): void {
+    this.selectedFamily = family;
+    if (family) {
+      this.loadFamilyMembers(family.id_familia);
+    } else {
+      this.familyMembers = [];
+      this.selectedFamilyRol = 'miembro';
     }
   }
 
-  loadFamilyData(familiaId: number) {
-    this.familyService.getFamilyById(familiaId).subscribe((family) => {
-      this.family = family;
-    });
+  loadFamilyMembers(familyId: number | null | undefined): void {
+    if (familyId) {
+      this.familyService.getUsersByFamily(familyId).subscribe({
+        next: (members) => {
+          this.familyMembers = members;
+        },
+        error: (err) =>
+          console.error('Error al cargar miembros de la familia:', err),
+      });
+    }
+  }
+
+  updatedFamily() {
+    this.loadFamilyMembers(this.selectedFamily?.id_familia);
+  }
+
+  reloadUserData(): void {
+    if (this.user?.usuario_id) {
+      this.familyService.getUserById(this.user.usuario_id).subscribe({
+        next: (updatedUser) => {
+          this.user = { ...updatedUser };
+        },
+        error: (err) =>
+          console.error('Error al recargar datos del usuario:', err),
+      });
+    }
   }
 }

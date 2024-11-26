@@ -1,18 +1,111 @@
-<div class="p-4 rounded-lg shadow-md w-full">
-    <h3 class="text-lg font-semibold">{{ family?.nombre || 'Sin Familia' }}</h3>
-    <p *ngIf="user && user.familia_id">Código de Familia: {{ user.familia_id }}</p>
+<div class="mt-10">
+  <h1 class="text-3xl font-semibold">
+    {{ user?.nombre }} {{ user?.apellido_pat }}
+  </h1>
+</div>
 
-  
-    <input #familyNameInput type="text" placeholder="Nombre de la familia" class="border p-2 rounded mt-2" />
-    <button (click)="createFamily(familyNameInput.value)" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 mt-2">
+<div class="p-4 rounded-lg shadow-md max-w-screen-md w-full mt-10 mx-auto ">
+  <h3 class="text-lg font-semibold">Familias</h3>
+
+  <!-- Mostrar mensaje si no hay familias -->
+  <div *ngIf="familias.length === 0" class="text-gray-500">
+    No tienes familias asociadas.
+  </div>
+
+  <!-- Contenedor principal para el menú desplegable y el ícono -->
+  <div class="relative inline-block w-full mt-6">
+    <div class="flex items-center gap-2">
+      <!-- Dropdown para seleccionar familia -->
+      <button
+        (click)="toggleDropdown()"
+        class="flex-grow bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center hover:bg-gray-200"
+      >
+        <span>{{ selectedFamilyIn?.nombre || "Selecciona una familia" }}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5 text-gray-600"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      <!-- Icono de tres puntos para opciones -->
+      <div
+        *ngIf="getRoleForFamily(selectedFamilyIn?.id_familia) === 'lider'"
+        class="relative"
+      >
+        <button
+          (click)="toggleContextMenu(selectedFamilyIn)"
+          class="text-gray-600 hover:text-black"
+        >
+          &#x22EE;
+        </button>
+
+        <!-- Opciones del menú contextual -->
+        <div
+          *ngIf="contextMenuOpen === selectedFamilyIn"
+          class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg z-50"
+        >
+          <button
+            (click)="renameFamily(selectedFamilyIn)"
+            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            Renombrar
+          </button>
+          <button
+            (click)="confirmDeleteFamily(selectedFamilyIn)"
+            class="w-full text-left px-4 py-2 text-red-500 hover:bg-red-100"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista desplegable -->
+    <ul
+      *ngIf="isDropdownOpen"
+      class="absolute w-full bg-white shadow-lg rounded-lg mt-2 max-h-60 overflow-y-auto z-10"
+    >
+      <li
+        *ngFor="let family of familias"
+        (click)="selectFamily(family)"
+        class="p-4 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
+      >
+        <span>{{ family.nombre }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contenedor para los botones -->
+  <div class="mt-6 flex  flex-row justify-center items-center gap-4 md:gap-6 max-lg:flex-col">
+    <button
+      (click)="openInputDialog('create')"
+      class="bg-blue-400 text-white w-3/4 px-4 py-2 rounded-lg hover:bg-blue-500 whitespace-nowrap"
+    >
       Crear Familia
     </button>
-  
-    <input #familyIdInput type="number" placeholder="ID de Familia para Unirse" class="border p-2 rounded mt-2" />
-    <button (click)="joinFamily(familyIdInput.value)" class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 mt-2">
-        Unirse a Familia
-      </button>
-      
-      
+
+    <button
+      (click)="openInputDialog('join')"
+      class="bg-green-400 w-3/4 text-white px-4 py-2 rounded-lg hover:bg-green-500 whitespace-nowrap"
+    >
+      Unirse a Familia
+    </button>
+
+    <button
+      (click)="openInviteDialog()"
+      class="bg-purple-400 w-3/4 text-white px-4 py-2 rounded-lg hover:bg-purple-500 whitespace-nowrap"
+    >
+      Invitar a Familia
+    </button>
   </div>
-  
+</div>

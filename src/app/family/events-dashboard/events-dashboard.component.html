@@ -1,0 +1,186 @@
+<!-- Contenedor principal -->
+<div *ngIf="familyId" class="p-6 border border-gray-300 rounded-lg shadow-md max-w-4xl mx-auto">
+  <h2 class="text-xl font-bold mb-4">Eventos de la Familia</h2>
+
+  <!-- Botón para abrir modal de agregar evento -->
+  <div class="mb-6">
+    <button
+      *ngIf="userRole === 'lider'"
+      (click)="openAddEventModal()"
+      class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+    >
+      Agregar Evento
+    </button>
+  </div>
+
+  <!-- Lista de eventos con barra de desplazamiento -->
+  <div>
+    <h3 class="text-lg font-semibold mb-2">Lista de Eventos</h3>
+    <div class="max-h-64 overflow-y-auto rounded-lg p-2">
+      <ul>
+        <li
+          *ngFor="let event of events"
+          class="p-4 mb-2 bg-purple-100 rounded-lg shadow"
+        >
+          <div class="flex justify-between items-center">
+            <div>
+              <h4 class="text-lg font-bold">{{ event.nombre }}</h4>
+              <p>{{ event.fecha_inicio }} - {{ event.fecha_fin }}</p>
+            </div>
+            <!-- Botones de acciones solo para líderes -->
+            <div *ngIf="userRole === 'lider'" class="flex gap-2">
+              <button
+                (click)="openEditModal(event)"
+                class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+              >
+                Editar
+              </button>
+              <button
+                (click)="openDeleteModal(event.evento_id!)"
+                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Agregar Evento -->
+<div *ngIf="isAddEventModalOpen" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+<div class="bg-purple-200 rounded-lg shadow-lg w-full sm:w-96 p-6 relative">
+  <!-- Botón para cerrar el modal -->
+  <button 
+    class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-[30px]" 
+    (click)="onClose()">
+    &times;
+  </button>
+
+  <!-- Título del modal -->
+  <h1 class="text-xl font-bold text-center mb-4">Agregar Evento</h1>
+
+  <!-- Formulario -->
+  <form (ngSubmit)="createEvent()">
+    <div class="mb-4">
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre del Evento:</label>
+      <input
+        id="nombre"
+        type="text"
+        [(ngModel)]="newEvent.nombre"
+        name="nombre"
+        placeholder="Nombre del evento"
+        class="p-2 border rounded w-full"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="fecha_inicio" class="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
+      <input
+        id="fecha_inicio"
+        type="date"
+        [(ngModel)]="newEvent.fecha_inicio"
+        name="fecha_inicio"
+        class="p-2 border rounded w-full"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="fecha_fin" class="block text-sm font-medium text-gray-700">Fecha de Fin:</label>
+      <input
+        id="fecha_fin"
+        type="date"
+        [(ngModel)]="newEvent.fecha_fin"
+        name="fecha_fin"
+        class="p-2 border rounded w-full"
+        required
+      />
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="gap-4">
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- Modal para Editar Evento -->
+<div
+*ngIf="isEditModalOpen"
+class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50"
+>
+<div class="bg-purple-200 rounded-lg shadow-lg w-full sm:w-96 p-6 relative">
+  <!-- Botón de Cerrar -->
+  <button 
+    class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-[30px]" 
+    (click)="Close()"> 
+    &times;
+  </button> 
+
+  <!-- Título del Modal -->
+  <h1 class="text-xl font-bold text-center mb-4">Editar Evento</h1>
+
+  <!-- Contenido del Modal -->
+  <div class="mb-4">
+    <!-- Nombre del Evento -->
+    <mat-form-field appearance="fill" class="w-full mb-4">
+      <mat-label>Nombre del Evento</mat-label>
+      <input matInput [(ngModel)]="selectedEvent!.nombre" name="nombre" required />
+    </mat-form-field>
+
+    <!-- Fecha de Inicio -->
+    <mat-form-field appearance="fill" class="w-full mb-4">
+      <mat-label>Fecha de Inicio</mat-label>
+      <input matInput type="date" [(ngModel)]="selectedEvent!.fecha_inicio" name="fecha_inicio" required />
+    </mat-form-field>
+
+    <!-- Fecha de Fin -->
+    <mat-form-field appearance="fill" class="w-full mb-4">
+      <mat-label>Fecha de Fin</mat-label>
+      <input matInput type="date" [(ngModel)]="selectedEvent!.fecha_fin" name="fecha_fin" required />
+    </mat-form-field>
+  </div>
+
+  <!-- Botones de Acción -->
+  <div class="gap-4 ">
+    <button
+      type="submit"
+      (click)="updateEvent()"
+      class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Guardar
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- Modal de Confirmación para Eliminar -->
+<div
+*ngIf="isDeleteModalOpen"
+class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+<div class="bg-purple-200 rounded-lg shadow-lg w-full sm:w-96 p-6 relative">
+  <h2 class="text-xl font-bold text-center mb-4">¿Estás seguro de eliminarlo?</h2>
+  <form class="flex flex-row justify-around">
+    <button
+      type="button"
+      class="w-2/5 bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+      (click)="closeDeleteModal()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="w-2/5 bg-red-500 text-white py-2 rounded hover:bg-red-600"
+      (click)="confirmDeleteEvent()">
+      Eliminar
+    </button>
+  </form>
+</div>
+</div>

@@ -21,9 +21,8 @@ export class RegisterComponent {
       apellido_pat: ['', Validators.required],
       apellido_mat: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
-      rol: ['miembro', Validators.required],
-      familia_id: [3, Validators.required],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
+      familia_id: [null],
     });
   }
 
@@ -33,8 +32,11 @@ export class RegisterComponent {
 
     this.credentialsService.registerUser(user).subscribe({
       next: () => this.registerSuccess.emit(),
-      error: () =>
-        (this.errorMessage = 'Error al registrarse. Inténtalo de nuevo.'),
+      error: (err) =>
+        (this.errorMessage =
+          'Error al registrarse. Inténtalo de nuevo.' +
+          '\n' +
+          err.error.detail),
     });
   }
 }

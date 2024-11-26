@@ -1,0 +1,36 @@
+<div class="p-10 md:pl-28 h-full grid md:grid-cols-2 gap-20 md:gap-20 grid-cols-1 max-lg:overflow-hidden max-lg:pt-0">
+  <!-- Contenedor principal -->
+  <div class="max-lg:overflow-y-auto h-screen max-lg:h-full max-lg:pb-10">
+    <h1 class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-40 max-lg:pl-0">Recordatorio</h1>
+    <div class="flex justify-center items-center gap-2 mb-6">
+      <button
+        (click)="abrirModal()"
+        class="bg-purple-100 hover:bg-purple-200 rounded-lg w-14 h-14 flex items-center justify-center "
+      >
+        <span class="material-icons text-black text-[30px] " >add</span>
+      </button>
+      <h2 class="text-black font-medium text-[20px]">Agregar recordatorio</h2>
+    </div>
+   
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-2 sm:grid-cols-2 items-center">
+      <!-- Tarjetas -->
+      <div class="bg-blue-200 rounded-lg p-4 text-center max-lg:p-0 max-lg:h-16 max-lg:w-24">
+        <p class="text-lg font-bold">Familia</p>
+        <span class="block text-2xl font-bold">{{recordatoriosFamily.length}}</span>
+      </div>
+      <div class="bg-yellow-200 rounded-lg p-4 text-center max-lg:p-0 max-lg:h-16 max-lg:w-24">
+        <p class="text-lg font-bold">Personal</p>
+        <span class="block text-2xl font-bold">{{recordatoriosPersonal.length}}</span>
+      </div>
+    </div>
+
+    <!-- Secciones de ejemplo -->
+    <app-reminder-dashboard></app-reminder-dashboard>
+    <app-incoming-activities class="hidden max-lg:block max-lg:pt-5" ></app-incoming-activities>
+  </div>
+
+  <app-modal-form-add class=" " *ngIf="modalAbierto" (cerrar)="cerrarModal()"></app-modal-form-add>
+
+  <!-- Temporal -->
+  <app-incoming-activities class="hidden lg:block"   ></app-incoming-activities>
+</div>

@@ -1,0 +1,80 @@
+<div class="hidden lg:block bg-purple-100 p-2 rounded-lg shadow-md w-full h-full">
+  <div class="p-5 text-[25px]">
+    <h1 class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-16">
+      PLANIFY
+  </h1>
+  <hr class="border-t-4 border-purple-800 hidden lg:block">
+  
+    <ul>
+      <li
+        (click)="navigation(1)"
+        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faList" class="text-gray-600 mr-2 text-[30px]"></fa-icon>
+        <span class="flex-1">Mis actividades</span>
+      </li>
+      <li
+        (click)="navigation(2)"
+        class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faUsers" class="text-gray-600 mr-2 text-[25px]"></fa-icon>
+        <span>Mi Familia</span>
+      </li>
+      <li
+        (click)="navigation(3)"
+        class="flex items-center justify-start px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300 mb-2"
+      >
+        <fa-icon [icon]="faBell" class="text-gray-600 mr-2 text-[30px]"></fa-icon>
+        <span>Recordatorio</span>
+      </li>
+      <li
+        (click)="navigation(4)"
+        class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-700 hover:bg-purple-200 cursor-pointer transition-colors duration-300"
+      >
+        <fa-icon [icon]="faUser" class="text-gray-600 mr-2"></fa-icon>
+        <span class="flex-1">Mi perfil</span>
+      </li>
+    </ul>
+  </div>
+  <!-- Botón de cierre de sesión -->
+  <div class="mt-auto flex justify-center pt-60 pr-10">
+    <button (click)="logout()" class="self-end text-[30px] focus:outline-none flex items-center">
+      <fa-icon [icon]="faLogout" class="text-gray-600 p-2"></fa-icon>
+      <span class="text-gray-700">Cerrar sesión</span>
+    </button>
+
+  </div>
+</div>
+
+<!-- Menú horizontal para móviles -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-purple-200 py-2 shadow-md">
+  <div class="flex justify-between items-center px-5">
+    <!-- Botón "Mis actividades" -->
+    <button class="flex flex-col items-center justify-center rounded-lg p-2 hover:bg-purple-400 cursor-pointer transition-colors duration-300 mb-2" (click)="navigation(1)">
+      <fa-icon [icon]="faList" class="text-gray-600 text-[25px]"></fa-icon>
+      <span class="text-[12px] text-gray-700">Actividades</span>
+    </button>
+
+    <!-- Botón "Mi Familia" seleccionado -->
+    <button class="flex flex-col items-center justify-center rounded-lg p-2 hover:bg-purple-400 cursor-pointer transition-colors duration-300 mb-2" (click)="navigation(2)">
+      <fa-icon [icon]="faUsers" class="text-gray-600 text-[25px]"></fa-icon>
+      <span class="text-[12px]">Mi Familia</span>
+    </button>
+
+    <!-- Botón "Recordatorio" -->
+    <button class="flex flex-col items-center justify-center rounded-lg p-2 hover:bg-purple-400 cursor-pointer transition-colors duration-300 mb-2" (click)="navigation(3)">
+      <fa-icon [icon]="faBell" class="text-gray-600 text-[25px]"></fa-icon>
+      <span class="text-[12px] text-gray-700">Recordatorio</span>
+    </button>
+
+    <button
+    (click)="navigation(4)"  class="flex flex-col items-center justify-center rounded-lg p-2 hover:bg-purple-400 cursor-pointer transition-colors duration-300 mb-2"   >
+    <fa-icon [icon]="faUser" class="text-gray-600 text-[25px]"></fa-icon>
+    <span class="text-[12px] text-gray-700">Mi perfil</span>
+  </button>
+    <button (click)="logout()" class="flex flex-col items-center justify-center focus:outline-none" >
+      <fa-icon [icon]="faLogout" class="text-gray-600 text-[25px]"></fa-icon>
+      <span class="text-[12px] text-gray-700">Cerrar sesión</span>
+    </button>
+  </div>
+</div>

@@ -1,22 +1,40 @@
-<div class="flex h-screen bg-gray-100">
-    <app-nav-bar class="w-1/4 bg-purple-100 p-4"></app-nav-bar>
-  
-    <div class="flex flex-col w-3/4 space-y-4 p-4">
-      <h1 class="text-3xl font-bold">Planify</h1>
-  
-    
-      <app-family-section
-        [user]="user"
-        [family]="family"
-        (familyUpdated)="loadFamilyData(user?.familia_id!)"
-        class="mb-4"
-      ></app-family-section>
-  
-      <app-family-dashboard
-        [familyMembers]="familyMembers"
-        [isLeader]="isLeader"
-        class="mt-4"
-      ></app-family-dashboard>
+<div class="flex h-screen bg-gray-100 justify-center overflow-hidden ">
+  <div class="flex flex-col w-full space-y-4 p-4 ">
+    <h1
+
+      class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-0 md:pl-64 pt-7"
+    >
+      Familia
+    </h1>
+    <div class="flex flex-col md:flex-row md:justify-around space-y-4 md:space-y-0 overflow-y-auto h-screen ">
+      <!-- Family Section -->
+      <div class="flex flex-col w-full md:w-2/5 space-y-4">
+        <app-family-section
+          [user]="user"
+          class="mb-4"
+          (selectedFamily)="selectFamily($event)"
+          (updatedFamilies)="reloadUserData()"
+          (selectedFamilyRol)="asignSelectedFamilyRol($event)"
+        ></app-family-section>
+        <app-events-dashboard
+          [familyId]="selectedFamily?.id_familia"
+          [userRole]="selectedFamilyRol"
+          class="w-full"
+        ></app-events-dashboard>
+      </div>
+
+
+      <!-- Family Dashboard -->
+      <div class="flex w-full md:w-1/2 lg:w-1/3">
+        <app-family-dashboard
+          [user]="user"
+          [family]="selectedFamily"
+          [familyMembers]="familyMembers"
+          class="mt-4 w-full max-lg:pb-40"
+          [familyRol]="selectedFamilyRol"
+          (updatedFamilyMembers)="updatedFamily()"
+        ></app-family-dashboard>
+      </div>
     </div>
   </div>
-  
+</div>
