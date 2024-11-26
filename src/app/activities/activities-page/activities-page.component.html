@@ -1,34 +1,41 @@
-<div class="p-10 pl-28">
-  <h1 class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-[400px] max-lg:pl-0">Actividades</h1>
-  <div class="flex justify-center items-center gap-2 mb-6">
-    <div class="flex items-center border border-white focus-within:border-purple-400 rounded-full overflow-hidden shadow-md">
+<div class="p-4 md:p-10 md:pl-28">
+  <h1 class="text-2xl md:text-4xl font-bold text-purple-800 mb-6 text-center md:text-left">
+    Actividades
+  </h1>
+  
+  <!-- Barra de búsqueda -->
+  <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
+    <div class="flex items-center border border-gray-300 focus-within:border-purple-400 rounded-full overflow-hidden shadow-md w-full max-w-md">
       <input
         type="search"
-        placeholder="buscar actividad"
-        class="h-12 w-96 px-8 text-xl outline-none border-none focus:ring-0 placeholder-gray-400"
+        placeholder="Buscar actividad"
+        class="h-10 md:h-12 w-full px-4 md:px-8 text-base md:text-xl outline-none border-none focus:ring-0 placeholder-gray-400"
         (input)="onSearchTermChange($event)" 
       />
-      <fa-icon [icon]="faSearch" class="text-gray-600 mr-2 text-[25px]"></fa-icon>
+      <fa-icon [icon]="faSearch" class="text-gray-600 mr-2 text-[20px] md:text-[25px]"></fa-icon>
     </div>
   </div>
-  <div class="flex justify-center items-center gap-4">
+
+  <!-- Botón Agregar Actividad -->
+  <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
     <button
       (click)="abrirModal()"
-      class="bg-purple-100 hover:bg-purple-200 rounded-lg w-14 h-14 flex items-center justify-center"
+      class="bg-purple-100 hover:bg-purple-200 rounded-lg w-12 h-12 flex items-center justify-center"
     >
-      <span class="material-icons text-black text-[30px]">add</span>
+      <span class="material-icons text-black text-[24px] md:text-[30px]">add</span>
     </button>
-    <div class="h-12 w-96 place-content-center">
-      <h2 class="text-black font-medium text-[20px] text-center">Agregar actividad</h2>
+    <div class="w-full text-center md:text-left">
+      <h2 class="text-black font-medium text-lg md:text-[20px]">Agregar actividad</h2>
     </div>
-    <div class="border-l-2 border-gray-300">
+    <div class="hidden md:block border-l-2 border-gray-300">
       <app-activities-suggestion></app-activities-suggestion>
     </div>
   </div>
 
-  
+  <!-- Lista de Actividades -->
   <app-activities-list [searchTerm]="searchTerm"></app-activities-list>
 
+  <!-- Modales -->
   <app-modal-from-add-activities
     (ActividadCreada)="onActividadcreada($event)"
     *ngIf="modalAbierto"

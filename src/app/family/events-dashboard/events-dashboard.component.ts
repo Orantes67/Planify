@@ -119,4 +119,12 @@ export class EventsDashboardComponent implements OnChanges {
       familia_id: 0,
     };
   }
+
+  onClose(): void {
+    this.closeAddEventModal();
+  }
+
+  Close(): void {
+    this.closeEditModal(); // Aquí se asegura que se cierre el modal de edición
+  }
 }
