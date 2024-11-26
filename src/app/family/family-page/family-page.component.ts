@@ -12,7 +12,7 @@ export class FamilyPageComponent implements OnInit {
   user: UserI | null = null;
   familyMembers: UserI[] = [];
   selectedFamily: FamilyI | null = null;
-  selectedFamilyRol: string = 'miembro'; // Resolución combinada, usando string
+  selectedFamilyRol: 'lider' | 'miembro' | undefined = 'miembro'; // Resolución combinada, usando string
 
   constructor(
     private storageService: StorageService,
@@ -23,7 +23,7 @@ export class FamilyPageComponent implements OnInit {
     this.user = this.storageService.obtenerUsuario();
   }
 
-  asignSelectedFamilyRol(rol: string): void {
+  asignSelectedFamilyRol(rol: 'lider' | 'miembro' | undefined): void {
     this.selectedFamilyRol = rol;
   }
 
