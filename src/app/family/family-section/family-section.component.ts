@@ -229,6 +229,8 @@ export class FamilySectionComponent implements OnChanges {
       if (family.id_familia)
         this.familyService.getUsersByFamily(family.id_familia).subscribe({
           next: (members) => {
+            console.log(members);
+            
             if (
               members.length === 1 &&
               members[0].usuario_id === this.user?.usuario_id

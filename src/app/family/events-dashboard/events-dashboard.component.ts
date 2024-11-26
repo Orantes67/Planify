@@ -11,6 +11,8 @@ export class EventsDashboardComponent implements OnChanges {
   @Input() familyId: number | null | undefined = null;
   @Input() userRole: 'lider' | 'miembro' | undefined;
   events: EventI[] = [];
+  isAddEventModalOpen = false;
+
   newEvent: EventCreateOrUpdateI = {
     nombre: '',
     fecha_inicio: '',
@@ -29,6 +31,14 @@ export class EventsDashboardComponent implements OnChanges {
     if (changes['familyId'] && changes['familyId'].currentValue) {
       this.loadEvents();
     }
+  }
+
+  openAddEventModal(): void {
+    this.isAddEventModalOpen = true;
+  }
+  
+  closeAddEventModal(): void {
+    this.isAddEventModalOpen = false;
   }
 
   loadEvents(): void {
