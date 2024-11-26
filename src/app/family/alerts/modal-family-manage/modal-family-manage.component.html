@@ -1,28 +1,34 @@
+
 <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
-  
-    <button 
+  <button 
         class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-[30px]" 
-        (click)="onClose()"> 
+        ((click)="closeDialog()"> 
         &times;
     </button> 
-    <h1 class="text-xl font-bold text-center mb-4" mat-dialog-title>{{ data.title }}</h1>
-  
-    <div mat-dialog-content class="mb-4">
-      <mat-form-field appearance="fill" class="w-full">
-        <mat-label>{{ data.placeholder }}</mat-label>
-        <input  matInput [(ngModel)]="inputData" />
-      </mat-form-field>
-    </div>
-  
-  
-    <div div mat-dialog-actions class="flex justify-center mt-6" mat-dialog-actions>
-      
-      <button mat-button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" (click)="saveInput()">Guardar</button>
-    </div>
-    
+<h1 mat-dialog-title class="text-xl font-bold text-center mb-4">{{ data.title }}</h1>
+
+<div *ngIf="alerta" class="text-center text-sm mb-4 px-4 py-2 rounded"
+  [ngClass]="{
+    'bg-green-200 text-green-800': alerta.estilo === 'exito',
+    'bg-red-200 text-red-800': alerta.estilo === 'error'
+  }">
+  {{ alerta.mensaje }}
+</div>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ data.placeholder }}</mat-label>
+    <input matInput [(ngModel)]="inputData" (blur)="touched = true" />
+    <mat-error *ngIf="touched && !inputData.trim()">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" (click)="saveInput()" >Guardar</button>
+</div>
   </div>
-   
   
   </div>
   
+

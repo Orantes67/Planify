@@ -4,11 +4,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-modal-family-manage',
   templateUrl: './modal-family-manage.component.html',
-  styleUrl: './modal-family-manage.component.css',
+  styleUrls: ['./modal-family-manage.component.css'],
 })
 export class ModalFamilyManageComponent {
   inputData: string = '';
+
   @Output() cerrar: EventEmitter<void> = new EventEmitter<void>();
+  touched: boolean = false;
+  alerta: { mensaje: string; estilo: 'exito' | 'error' } | null = null;
+
 
   constructor(
     public dialogRef: MatDialogRef<ModalFamilyManageComponent>,
@@ -20,7 +24,22 @@ export class ModalFamilyManageComponent {
   }
 
   saveInput(): void {
-    this.dialogRef.close(this.inputData);
+    if (this.inputData.trim()) {
+      this.alerta = {
+        mensaje: '¡Datos guardados con éxito!',
+        estilo: 'exito',
+      };
+
+      setTimeout(() => {
+        this.dialogRef.close(this.inputData);
+      }, 1000);
+    } else {
+      console.log("error")
+      this.alerta = {
+        mensaje: 'El campo es obligatorio.',
+        estilo: 'error',
+      };
+    }
   }
 
   onClose(): void {
