@@ -1,12 +1,26 @@
 <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+
+
   <div class="bg-purple-200 rounded-lg shadow-lg w-full max-w-sm p-6 relative mx-4">
+    
     <button
-      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none text-[50px]"
       (click)="cerrar.emit()">
       &times;
-    </button>    
-    <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
+    </button>
     
+    <h2 class="text-xl font-bold text-center mb-4">Agregar recordatorio</h2>
+
+      <!-- Mensaje de alerta -->
+<div
+*ngIf="alerta"
+class="text-center text-sm mb-4 px-4 py-2 rounded"
+[ngClass]="{
+  'bg-green-200 text-green-800': alerta.estilo === 'exito',
+  'bg-red-200 text-red-800': alerta.estilo === 'error'
+}">
+{{ alerta.mensaje }}
+</div>
     <form (ngSubmit)="crearRecordatorio()">
       <!-- Título -->
       <div class="mb-4">
@@ -15,8 +29,10 @@
           id="titulo"
           [(ngModel)]="recordatorio.titulo"
           name="titulo"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          [ngClass]="{ 'border-red-500': !recordatorio.titulo && formSubmitted }"
           required>
+        <small *ngIf="!recordatorio.titulo && formSubmitted" class="text-red-500 text-xs">El título es obligatorio.</small>
       </div>
 
       <!-- Contenido -->
@@ -27,20 +43,11 @@
           [(ngModel)]="recordatorio.contenido"
           name="contenido"
           rows="3"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          [ngClass]="{ 'border-red-500': !recordatorio.contenido && formSubmitted }"
           required>
         </textarea>
-      </div>
-
-      <!-- ID Familia -->
-      <div class="mb-4">
-        <label for="id_familia" class="block text-gray-700 text-sm">ID Familia</label>
-        <input
-          id="id_familia"
-          type="number"
-          [(ngModel)]="recordatorio.familia_id"
-          name="id_familia"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+        <small *ngIf="!recordatorio.contenido && formSubmitted" class="text-red-500 text-xs">El contenido es obligatorio.</small>
       </div>
 
       <!-- Hora Límite -->
@@ -51,22 +58,10 @@
           type="datetime-local"
           [(ngModel)]="recordatorio.fecha_hora"
           name="hora_limite"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-          required />
-      </div>
-
-      <!-- Categoría -->
-      <div class="mb-4">
-        <label for="categoria" class="block text-gray-700 text-sm">Categoría</label>
-        <select
-          id="categoria"
-          [(ngModel)]="recordatorio.categoria"
-          name="categoria"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          [ngClass]="{ 'border-red-500': !esHoraValida && formSubmitted }"
           required>
-          <option value="familia">Familia</option>
-          <option value="personal">Personal</option>
-        </select>
+        <small *ngIf="!esHoraValida && formSubmitted" class="text-red-500 text-xs">La fecha y hora límite debe ser posterior a la fecha y hora actual.</small>
       </div>
 
       <!-- Correos Destinatarios -->
@@ -76,9 +71,11 @@
           id="correo_destinatario"
           [(ngModel)]="correos"
           name="correo_destinatario"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          [ngClass]="{ 'border-red-500': !esCorreoValido && formSubmitted }"
           placeholder="correo1@example.com, correo2@example.com"
           required>
+        <small *ngIf="!esCorreoValido && formSubmitted" class="text-red-500 text-xs">Por favor, ingrese correos válidos.</small>
       </div>
 
       <!-- Botón Crear -->
@@ -87,6 +84,10 @@
         class="w-full bg-blue-500 text-white py-2 text-sm rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         Crear
       </button>
+      
     </form>
   </div>
+
+
 </div>
+

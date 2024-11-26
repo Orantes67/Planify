@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalReminderEditComponent } from './alerts/modal-reminder-edit/modal-reminder-edit.component';
 import { ModalReminderDeleteComponent } from './alerts/modal-reminder-delete/modal-reminder-delete.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -34,6 +35,7 @@ import { ModalReminderDeleteComponent } from './alerts/modal-reminder-delete/mod
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
+    MatSnackBarModule,
     BrowserAnimationsModule
 ],
   exports: [

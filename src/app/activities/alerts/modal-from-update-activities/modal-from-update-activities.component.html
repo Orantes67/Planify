@@ -1,13 +1,21 @@
-<div
-  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 px-4">
-  <div
-    class="bg-purple-200 rounded-lg shadow-lg w-full max-w-md p-6 relative">
+<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 px-4">
+  <div class="bg-purple-200 rounded-lg shadow-lg w-full max-w-md p-6 relative">
     <button
       class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
       (click)="cerrar.emit()">
       &times;
     </button>
     <h2 class="text-lg font-bold text-center mb-4">Editar actividad</h2>
+
+    <!-- Alerta de éxito o error -->
+    <div *ngIf="alerta" class="text-center text-sm mb-4 px-4 py-2 rounded"
+      [ngClass]="{
+        'bg-green-200 text-green-800': alerta.estilo === 'exito',
+        'bg-red-200 text-red-800': alerta.estilo === 'error'
+      }">
+      {{ alerta.mensaje }}
+    </div>
+
     <form (ngSubmit)="editarActividad()">
       <div class="mb-4">
         <label for="nombre" class="block text-gray-700">Título</label>
