@@ -8,7 +8,8 @@ import { ReminderModule } from './reminder/reminder.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { MiProfileModuleModule } from './mi-profile-module/mi-profile-module.module';
-
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,13 @@ import { MiProfileModuleModule } from './mi-profile-module/mi-profile-module.mod
     NavigationModule,
     ActivitiesModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
 export interface CredentialsI {
-    email: string;
-    contrasena: string;
+  correo: string;
+  contrasena: string;
 }
