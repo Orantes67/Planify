@@ -1,12 +1,12 @@
-<div class="flex h-screen bg-gray-100 justify-center">
-  <div class="flex flex-col w-full space-y-4 p-4">
+<div class="flex h-screen bg-gray-100 justify-center overflow-hidden ">
+  <div class="flex flex-col w-full space-y-4 p-4 ">
     <h1
 
       class="text-4xl font-bold text-purple-800 mb-6 text-center md:text-left pl-0 md:pl-64 pt-7"
     >
       Familia
     </h1>
-    <div class="flex flex-col md:flex-row md:justify-around space-y-4 md:space-y-0">
+    <div class="flex flex-col md:flex-row md:justify-around space-y-4 md:space-y-0 overflow-y-auto h-screen ">
       <!-- Family Section -->
       <div class="flex flex-col w-full md:w-2/5 space-y-4">
         <app-family-section
@@ -30,7 +30,7 @@
           [user]="user"
           [family]="selectedFamily"
           [familyMembers]="familyMembers"
-          class="mt-4 w-full"
+          class="mt-4 w-full max-lg:pb-40"
           [familyRol]="selectedFamilyRol"
           (updatedFamilyMembers)="updatedFamily()"
         ></app-family-dashboard>
