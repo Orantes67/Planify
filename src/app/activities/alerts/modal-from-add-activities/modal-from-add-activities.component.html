@@ -1,13 +1,20 @@
 <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
-    <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-900" (click)="cerrar.emit()">
+  <div class="bg-purple-200 rounded-lg shadow-lg w-full max-w-lg p-4 sm:p-6 relative mx-4">
+    <!-- Botón de cierre -->
+    <button
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl focus:outline-none"
+      (click)="cerrar.emit()">
       &times;
     </button>
+    
+    <!-- Título -->
     <h2 class="text-xl font-bold text-center mb-4">Agregar nueva actividad</h2>
+    
+    <!-- Formulario -->
     <form (ngSubmit)="crearActividad()">
-   
+      <!-- Título -->
       <div class="mb-4">
-        <label for="nombre" class="block text-gray-700">Titulo</label>
+        <label for="nombre" class="block text-gray-700">Título</label>
         <textarea
           id="nombre"
           [(ngModel)]="actividad.nombre"
@@ -22,30 +29,33 @@
         </div>
       </div>
 
-      <div class="flex gap-2"> 
-        <div class="mb-4">
+      <!-- Fechas -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Fecha inicio -->
+        <div>
           <label for="fecha_inicio" class="block text-gray-700">Fecha inicio</label>
           <input
             id="fecha_inicio"
             type="date"
             [(ngModel)]="actividad.fecha_inicio"
             name="fecha_inicio"
-            class="w-40 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
             (blur)="touched.fecha_inicio = true"
-            required>
+            required />
           <div *ngIf="touched.fecha_inicio && !actividad.fecha_inicio.trim()" class="text-red-500 text-xs">
             Este campo es obligatorio.
           </div>
         </div>
-  
-        <div class="mb-4">
+
+        <!-- Fecha fin -->
+        <div>
           <label for="fecha_fin" class="block text-gray-700">Fecha fin</label>
           <input
             id="fecha_fin"
             type="date"
             [(ngModel)]="actividad.fecha_fin"
-            name="id_familia"
-            class="w-40 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="fecha_fin"
+            class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
             (blur)="touched.fecha_fin = true"
             required />
           <div *ngIf="touched.fecha_fin && !actividad.fecha_fin" class="text-red-500 text-xs">
@@ -57,30 +67,33 @@
         </div>
       </div>
 
-      <div class="flex gap-2">
-        <div class="mb-4">
+      <!-- Horas -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        <!-- Hora inicio -->
+        <div>
           <label for="hora_inicio" class="block text-gray-700">Hora inicio</label>
           <input
             id="hora_inicio"
             type="time"
             [(ngModel)]="actividad.hora_inicio"
-            name="hora_limite"
-            class="w-40  border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="hora_inicio"
+            class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
             (blur)="touched.hora_inicio = true"
             required />
           <div *ngIf="touched.hora_inicio && !actividad.hora_inicio.trim()" class="text-red-500 text-xs">
             Este campo es obligatorio.
           </div>
         </div>
-  
-        <div class="mb-4">
+
+        <!-- Hora fin -->
+        <div>
           <label for="hora_fin" class="block text-gray-700">Hora fin</label>
           <input
             id="hora_fin"
             type="time"
             [(ngModel)]="actividad.hora_fin"
-            name="hora_limite"
-            class="w-40  border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="hora_fin"
+            class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
             (blur)="touched.hora_fin = true"
             required />
           <div *ngIf="touched.hora_fin && !actividad.hora_fin" class="text-red-500 text-xs">
@@ -91,7 +104,9 @@
           </div>
         </div>
       </div>
-      <div class="mb-4">
+
+      <!-- Categoría -->
+      <div class="mt-4">
         <label for="categoria" class="block text-gray-700">Categoría</label>
         <select
           id="categoria"
@@ -111,10 +126,11 @@
           Seleccionar una categoría es obligatorio.
         </div>
       </div>
-      
+
+      <!-- Botón de envío -->
       <button
         type="submit"
-        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        class="w-full bg-blue-500 text-white py-2 rounded mt-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         Crear
       </button>
     </form>

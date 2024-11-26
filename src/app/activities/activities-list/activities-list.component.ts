@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { Activities } from '../interfaces/activities';
 import { ActivitiesService } from '../service/activities.service';
 import { StorageService } from '../../services/storage.service';
@@ -20,6 +20,8 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
   modalEliminarActivo: boolean = false;
   menuActivo: number | null = null;
 
+  screenIsSmall: boolean = false; // Nuevo: para detectar si la pantalla es pequeña
+
   constructor(
     private actividadService: ActivitiesService,
     private storageService: StorageService
@@ -28,12 +30,22 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.obtenerUsuarioId();
     this.cargarActividadesDesdeLocalStorage();
+    this.updateScreenSize(); // Verifica el tamaño inicial de la pantalla
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchTerm']) {
       this.filtrarActividades();
     }
+  }
+
+  @HostListener('window:resize', []) // Escucha cambios de tamaño de pantalla
+  onResize() {
+    this.updateScreenSize();
+  }
+
+  private updateScreenSize(): void {
+    this.screenIsSmall = window.innerWidth <= 640; // Consideramos móvil si el ancho es menor o igual a 640px
   }
 
   obtenerUsuarioId(): void {
@@ -127,7 +139,6 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
       this.filtrarActividades(); 
     }
   }
-  
 
   eliminarActividadConfirmada(id: number): void {
     this.actividades = this.actividades.filter(
@@ -147,4 +158,3 @@ export class ActivitiesListComponent implements OnInit, OnChanges {
     this.modalEditarActivo = true;
   }
 }
-  
