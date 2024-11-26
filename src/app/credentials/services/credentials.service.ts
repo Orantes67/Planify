@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { UserI } from '../interfaces/user-i';
 import { CredentialsI } from '../interfaces/credentials-i';
 import { UserSerialization } from '../interfaces/user-serialization';
+import { LoginResponseI } from '../interfaces/login-response-i';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +20,25 @@ export class CredentialsService {
     return this.http.post<UserSerialization>(`${this.apiUrl}/register`, data);
   }
 
-  loginUser(credentials: CredentialsI): Observable<UserSerialization> {
-    const params = new HttpParams()
-      .set('email', credentials.email)
-      .set('user_password', credentials.contrasena);
+  loginUser(credentials: CredentialsI): Observable<LoginResponseI> {
+    return this.http
+      .post<LoginResponseI>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        tap((response: LoginResponseI) => {
+          this.setToken(response.access_token);
+        })
+      );
+  }
 
-    return this.http.post<UserSerialization>(`${this.apiUrl}/login`, null, {
-      params,
-    });
+  setToken(token: string): void {
+    localStorage.setItem('authToken', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
   }
 }

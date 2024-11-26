@@ -11,6 +11,7 @@ import {
   faFacebookSquare,
   faTwitterSquare,
 } from '@fortawesome/free-brands-svg-icons';
+import { CredentialsService } from '../../credentials/services/credentials.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,10 @@ import {
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private credentialsService: CredentialsService
+  ) {}
   faList = faList;
   faUsers = faUsers;
   faBell = faBell;
@@ -30,6 +34,7 @@ export class SidebarComponent {
 
   logout() {
     this.router.navigate(['/login']);
+    this.credentialsService.logout();
   }
 
   navigation(id: number) {

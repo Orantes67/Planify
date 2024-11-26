@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CredentialsService } from '../services/credentials.service';
 import { CredentialsI } from '../interfaces/credentials-i';
 import { UserI } from '../interfaces/user-i';
+import { LoginResponseI } from '../interfaces/login-response-i';
+import { FamilyService } from '../../family/services/family.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +17,11 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
+    private familyService: FamilyService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      correo: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -27,11 +30,23 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
     const credentials: CredentialsI = this.loginForm.value;
 
+    console.log(credentials);
+
     this.credentialsService.loginUser(credentials).subscribe({
-      next: (response: any) => {
-        const user: UserI = response.user;
-        this.loginSuccess.emit(user);
+      next: (response: LoginResponseI) => {
+        console.log(response);
+
+        let userRes: UserI;
+        this.familyService
+
+          .getUserById(response.user.usuario_id)
+          .subscribe((user) => {
+            userRes = user;
+            this.loginSuccess.emit(userRes);
+          });
+        this.credentialsService.setToken(response.access_token);
       },
+
       error: () =>
         (this.errorMessage = 'Credenciales incorrectas. Inténtalo de nuevo.'),
     });
