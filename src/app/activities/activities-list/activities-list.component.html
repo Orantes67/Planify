@@ -3,10 +3,11 @@
   <div *ngIf="actividadesFiltradas.length === 0" class="text-center text-gray-500">
     No hay actividades disponibles.
   </div>
-
+<div class="">
+</div>
   <div
     *ngFor="let actividad of actividadesFiltradas.slice(0, actividadesMostradas)"
-    class="border border-gray-300 rounded-lg p-3 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-md transition relative"
+    class="  border border-gray-300 rounded-lg p-3 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-md transition relative"
   >
     <div class="flex flex-col">
       <h3 class="text-base font-semibold">{{ actividad.nombre }}</h3>

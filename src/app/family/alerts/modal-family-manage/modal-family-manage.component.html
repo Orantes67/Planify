@@ -1,4 +1,12 @@
-<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-purple-200 rounded-lg shadow-lg w-96 p-6 relative">
+  <button 
+        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-[30px]" 
+        ((click)="closeDialog()"> 
+        &times;
+    </button> 
+<h1 mat-dialog-title class="text-xl font-bold text-center mb-4">{{ data.title }}</h1>
 
 <div *ngIf="alerta" class="text-center text-sm mb-4 px-4 py-2 rounded"
   [ngClass]="{
@@ -17,6 +25,10 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="closeDialog()">Cancelar</button>
-  <button mat-button color="primary" (click)="saveInput()" >Guardar</button>
+  <button mat-button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" (click)="saveInput()" >Guardar</button>
 </div>
+  </div>
+  
+  </div>
+  
+
