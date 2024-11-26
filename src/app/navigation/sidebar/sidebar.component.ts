@@ -4,6 +4,7 @@ import {
   faUsers,
   faBell,
   faArrowRightFromBracket,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import {
@@ -25,6 +26,7 @@ export class SidebarComponent {
   ) {}
   faList = faList;
   faUsers = faUsers;
+  faUser = faUser;
   faBell = faBell;
   faFacebookSquare = faFacebookSquare;
   faInstagramSquare = faInstagramSquare;
