@@ -18,8 +18,8 @@ export class ModalFromAddActivitiesComponent {
     hora_inicio: '',
     fecha_fin: '',
     hora_fin: '',
-    usuario_id:0,
     categoria: '',
+    usuario_id:0,
     familia_id: 0,
     actividad_id: 0,
   };
@@ -115,8 +115,8 @@ export class ModalFromAddActivitiesComponent {
       hora_inicio: '',
       fecha_fin: '',
       hora_fin: '',
-      usuario_id:0,
       categoria: '',
+      usuario_id:0,
       familia_id: 0,
       actividad_id: 0,
     };
