@@ -32,6 +32,7 @@ export class ModalFromUpdateActivitiesComponent implements OnChanges {
     fecha_fin: '',
     hora_fin: '',
     categoria: '',
+    usuario_id:0,
     familia_id: 0,
     actividad_id: 0,
   };

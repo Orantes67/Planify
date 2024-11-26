@@ -17,6 +17,7 @@ export class MiProfilePageComponent implements OnInit {
     correo: '',
     familia_id: 0,
     contrasena: '',
+    usuario_id:0,
     imageid: '',
     roles: [],
   };

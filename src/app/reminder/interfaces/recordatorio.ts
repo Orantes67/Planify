@@ -7,7 +7,7 @@ export interface Recordatorio {
     fecha_hora: string
     evento_id:number | null
     familia_id: number | null
-    usuario_id: number | undefined
+    usuario_id: number 
     categoria: string
-    correo_destinatario: string | null
+    correo_destinatario?: string[];
 }

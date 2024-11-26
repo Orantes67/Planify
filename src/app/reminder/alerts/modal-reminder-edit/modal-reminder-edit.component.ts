@@ -9,9 +9,11 @@ import { RecordatoriosService } from '../../recordatorios.service';
 export class ModalReminderEditComponent {
   @Output() cerrar = new EventEmitter<void>();
   @Input() recordatorioCreado!: Recordatorio;
-  
+  correos: string = '';
   constructor( private recordatoriosService:RecordatoriosService){}
   editarRecordatorio(){
+    const fechaISO = new Date(this.recordatorioCreado.fecha_hora).toISOString();
+    this.recordatorioCreado.fecha_hora = fechaISO;
     console.log('Recordatorio editado', this.recordatorioCreado);
     this.recordatoriosService.updateRecordatorio(this.recordatorioCreado).subscribe(() => {
       this.cerrar.emit(); 

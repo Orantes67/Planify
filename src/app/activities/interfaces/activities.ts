@@ -5,6 +5,7 @@ export interface Activities{
     fecha_fin: string,
     hora_fin: string,
     categoria: string,
+    usuario_id:number,
     familia_id: number ,
     actividad_id: number,
     mostrarMenu?: boolean; 

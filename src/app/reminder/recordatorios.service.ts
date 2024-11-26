@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Recordatorio } from './interfaces/recordatorio';
@@ -8,10 +8,15 @@ import { Recordatorio } from './interfaces/recordatorio';
 })
 export class RecordatoriosService {
   private apiUrl = `${environment.apiUrl}/recordatorios`;
-  constructor(private http: HttpClient) {}
 
-  createRecordatorio(recordatorio: Recordatorio): Observable<Recordatorio> {
-    return this.http.post<Recordatorio>(this.apiUrl, recordatorio);
+ 
+  createRecordatorio(recordatorio:Recordatorio): Observable<Recordatorio> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post<Recordatorio>(this.apiUrl, recordatorio, { headers });
+
   }
   getRecordatorios(): Observable<Recordatorio[]> {
     return this.http.get<Recordatorio[]>(this.apiUrl);
