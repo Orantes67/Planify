@@ -21,7 +21,8 @@ export class ModalFamilyInviteComponent {
     this.dialogRef.close(this.email);
   }
 
-  closeDialog(): void {
-    this.dialogRef.close();
+
+  onClose(): void {
+    this.dialogRef.close();  // Cierra el modal sin pasar ningún dato.
   }
 }

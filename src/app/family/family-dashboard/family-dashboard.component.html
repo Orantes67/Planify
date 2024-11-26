@@ -1,5 +1,5 @@
 <div
-  class="bg-yellow-100 p-4 rounded-lg shadow-md w-3/4 flex flex-col items-center"
+  class=" p-4 rounded-lg shadow-md w-3/4 flex flex-col items-center"
 >
   <h3 class="text-lg font-semibold">
     Miembros de la familia {{ family?.nombre }} - Código
@@ -8,7 +8,7 @@
   <ul class="w-full">
     <li
       *ngFor="let member of familyMembers"
-      class="flex items-center justify-between mb-2 bg-lime-100 p-4 rounded-md max-w-full min-h-20 cursor-pointer"
+      class="flex items-center justify-between mb-2 bg-purple-100 p-4 rounded-md max-w-full min-h-20 cursor-pointer"
       [class.bg-lime-300]="selectedMember?.usuario_id === member.usuario_id"
       (click)="selectMember(member)"
     >

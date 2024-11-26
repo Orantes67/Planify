@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject,Output,EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -8,16 +8,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ModalFamilyManageComponent {
   inputData: string = '';
+  @Output() cerrar: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(
     public dialogRef: MatDialogRef<ModalFamilyManageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string; placeholder: string }
   ) {}
 
-  closeDialog(): void {
+  closeDialog(): void { 
     this.dialogRef.close();
   }
 
   saveInput(): void {
     this.dialogRef.close(this.inputData);
+  }
+
+  onClose(): void {
+    this.cerrar.emit();
+    this.closeDialog();
   }
 }
